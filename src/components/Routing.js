@@ -4,6 +4,7 @@ import {Router,Route,Switch,Redirect} from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 
 import Home from './Pages/Home'
+import NotFound from './Pages/NotFound'
 
 
 
@@ -14,6 +15,8 @@ const Routing =()=> (
         <Router history={customHistory} >
             <Switch>
                 <Route component={Home} path="/" exact />
+
+                <Route component={NotFound} path='*'/>
             </Switch>
         </Router>
 )
