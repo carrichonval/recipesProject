@@ -21,7 +21,7 @@ export const isAdmin = () => {
 
 //Vérifie si l'utilisateur est connecté
 export const isAuthenticated = () => {
-    //return true
+
     try {
         const decoded = jwt.verify(localStorage.getItem('token'), process.env.REACT_APP_TOKEN_KEY);
         if(decoded){
