@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter,Link } from "react-router-dom";
 import { isAuthenticated,getUserAuth,deconnexion,isAdmin } from '../functions/auth'
-
 import Logo from '../svg/Logo'
 
 export default withRouter((props)=>{
 
     const [isOpenMobile,setIsOpenMobile] = useState(false)
+
     
     //Header qui s'affiche seulement quand on est connecté    
         return (
@@ -17,38 +17,40 @@ export default withRouter((props)=>{
                         <div className="flex">
                             <div className="flex-shrink-0 flex items-center">
                                 <div onClick={()=>setIsOpenMobile(!isOpenMobile)} className="h-12 w-12 lg:hidden block">
-                                    <Logo/>
+                                    <Logo color="white" />
                                 </div>
                                 <div className="h-12 w-12 lg:block hidden">
-                                    <Logo/>
+                                    <Link to="/">
+                                        <Logo color="white"/>
+                                    </Link>
                                 </div>
                             </div>
-                            <div className="hidden sm:-my-px sm:ml-6 sm:flex">
-                                <Link  to="/" className={(props.location.pathname === "/" ? "border-second " : "border-transparent ") + "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 focus:outline-none hover:border-red-400 transition duration-150 ease-in-out"}>
+                            <div className="hidden sm:-my-px sm:ml-6 lg:flex">
+                                <Link  to="/" className={(props.location.pathname === "/" ? "border-second " : "border-transparent ") + "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 focus:outline-none hover:text-gray-600 hover:border-fourth transition duration-150 ease-in-out"}>
                                     Accueil
                                 </Link>
-                                <Link  to="/search" className={(props.location.pathname === "/search" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-red-400 transition duration-150 ease-in-out"}>
+                                <Link  to="/search" className={(props.location.pathname === "/search" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth transition duration-150 ease-in-out"}>
                                     Recherche
                                 </Link>
-                                <Link  to="/dashboard" className={(props.location.pathname === "/dashboard" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-red-400 transition duration-150 ease-in-out"}>
+                                <Link  to="/dashboard" className={(props.location.pathname === "/dashboard" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth transition duration-150 ease-in-out"}>
                                     Statistiques
                                 </Link>
-                                <Link  to="/recipes" className={(props.location.pathname === "/recipes" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-red-400  transition duration-150 ease-in-out"}>
-                                    Mes recettes
+                                <Link  to="/recipes" className={(props.location.pathname === "/recipes" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth  transition duration-150 ease-in-out"}>
+                                    Recettes
                                 </Link>
-                                <Link  to="/cook" className={(props.location.pathname === "/cook" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-red-400  transition duration-150 ease-in-out"}>
+                                <Link  to="/cook" className={(props.location.pathname === "/cook" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth  transition duration-150 ease-in-out"}>
                                     En cuisine
                                 </Link>
-                                <Link  to="/users" className={(props.location.pathname === "/users" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-red-400  transition duration-150 ease-in-out"}>
+                                <Link  to="/users" className={(props.location.pathname === "/users" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth  transition duration-150 ease-in-out"}>
                                     Utilisateurs
                                 </Link>
-                                <Link  to="/profil" className={(props.location.pathname === "/profil" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-red-400  transition duration-150 ease-in-out"}>
+                                <Link  to="/profil" className={(props.location.pathname === "/profil" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth  transition duration-150 ease-in-out"}>
                                     Mon profil
                                 </Link>
 
                             </div>
                         </div>
-                        <div className="hidden sm:ml-6 sm:flex sm:items-center">
+                        <div className="hidden sm:ml-6 lg:flex sm:items-center">
                             {isAdmin() &&
                                 <Link  to="/parametres" className="mx-2">
                                     <svg className={(props.location.pathname === "/parametres" ? "text-primary " : "text-gray-500 ")+"h-5 w-5 "}  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round"> 
@@ -90,7 +92,7 @@ export default withRouter((props)=>{
 
                         </div>
 
-                        <div className="-mr-2 flex items-center sm:hidden">
+                        <div className="-mr-2 flex items-center lg:hidden">
                             <button onClick={()=>setIsOpenMobile(!isOpenMobile)} className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 transition duration-150 ease-in-out" aria-label="Main menu" aria-expanded="false">
                                 <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -101,7 +103,7 @@ export default withRouter((props)=>{
                 </div>
 
                 {/* menu dropdown mobile */}
-                <div className={(isOpenMobile ? " block " :" hidden ") +"sm:hidden"}>
+                <div className={(isOpenMobile ? " block " :" hidden ") +"lg:hidden "}>
                     
                     <div className="pt-2 pb-3 border-b border-gray-300">
                         <Link onClick={()=>setIsOpenMobile(!isOpenMobile)} to="/" className={(props.location.pathname === "/" ? "border-primary bg-fourth text-gray-900 " : "border-transparent ") +" block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-gray-600 transition hover:text-gray-700 hover:border-fourth duration-150 ease-in-out"}>
@@ -114,7 +116,7 @@ export default withRouter((props)=>{
                             Statistiques
                         </Link>
                         <Link onClick={()=>setIsOpenMobile(!isOpenMobile)} to="/recipes" className={(props.location.pathname === "/recipes" ? "border-primary bg-fourth text-gray-900 " : "border-transparent ") +" mt-1 block pl-3 pr-4 py-2 border-l-4  text-base font-medium text-gray-600 hover:text-gray-700 hover:border-fourth transition duration-150 ease-in-out"}>
-                            Mes recettes
+                            Recettes
                         </Link>
                         <Link onClick={()=>setIsOpenMobile(!isOpenMobile)} to="/cook" className={(props.location.pathname === "/cook" ? "border-primary bg-fourth text-gray-900 " : "border-transparent ") +" mt-1 block pl-3 pr-4 py-2 border-l-4  text-base font-medium text-gray-600 hover:text-gray-700 hover:border-fourth transition duration-150 ease-in-out"}>
                             En cuisine
