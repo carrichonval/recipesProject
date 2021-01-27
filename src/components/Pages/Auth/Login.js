@@ -4,8 +4,12 @@ import Logo from '../../svg/Logo'
 
 export default function Login (props){
 
-    const [login,setLogin] = useState('')
-    const [password,setPassword] = useState('')
+    const [user,setUser] = useState(
+        {
+            "login": "",
+            "password": ""
+        }
+    )
     const [error,setError] = useState('')
     const [passwordVisible,setPasswordVisible] = useState(false)
 
@@ -22,7 +26,6 @@ export default function Login (props){
     },[])
 
     const checkEnterPress = (e) => {
-        console.log(e)
         if(e.key == "Enter"){
             document.getElementById("login").click()
         }
@@ -30,19 +33,14 @@ export default function Login (props){
 
 
     //Connexion
-    const connexion = (props,login,password) => {
+    const connexion = (props,) => {
 
-        fetch(process.env.REACT_APP_API_URL+'/auth/login', {
+        fetch(process.env.REACT_APP_API_URL+'/login', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
             },
-            body:JSON.stringify(
-                {
-                    "login":login,
-                    'password':password
-                }
-            )
+            body:JSON.stringify(user)
         })
         .then((response) => {
             if (!response.ok) {
@@ -51,9 +49,15 @@ export default function Login (props){
             return response.json();
         })
         .then((json) => {
-            localStorage.setItem('token',json.access_token)
-            //Redirige vers la page d'accueil
-            props.history.push('/')
+            console.log(json)
+            if(json.access_token){
+                localStorage.setItem('token',json.access_token)
+                //Redirige vers la page d'accueil
+                props.history.push('/')
+            }else{
+                setError(json.message)
+            }
+           
         })
         .catch((error) => {
             setError("Identifiant ou mot de passe incorrect")
@@ -75,12 +79,12 @@ export default function Login (props){
                     </div>
                     <div className="rounded-md shadow-sm">
                         <div>
-                            <input autoComplete="off" onChange={(e)=>setLogin(e.target.value)} value={login} name="email" type="text" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Email"/>
+                            <input autoComplete="off" onChange={(e)=>setUser({...user,login:e.target.value})} value={user.login} name="email" type="text" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Email"/>
                         </div>
                         <div className="-mt-px">
                             <div>
                                 <div class="relative ">
-                                    <input autoComplete="off" onChange={(e)=>setPassword(e.target.value)} aria-label="Password" name="password" type={passwordVisible ? "text" : "password"} required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Mot de passe"/>
+                                    <input autoComplete="off" onChange={(e)=>setUser({...user,password:e.target.value})} aria-label="Password" name="password" type={passwordVisible ? "text" : "password"} required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Mot de passe"/>
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center ">
                                         <span onClick={()=>setPasswordVisible(!passwordVisible)} class="cursor-pointer text-gray-500 sm:text-sm sm:leading-5" id="price-currency">
                                             <svg class="  h-5 w-5 text-gray-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -128,8 +132,8 @@ export default function Login (props){
                     
 
                     <div className="mt-6">
-                        <button id="login" onClick={()=>connexion(props,login,password)} className="w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-primary hover:bg-fourth focus:outline-none focus:border-red-800 focus:shadow-outline-red active:bg-red-800 transition duration-150 ease-in-out">
-                        Se connecter
+                        <button id="login" onClick={()=>connexion(props)} className="w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-primary hover:bg-fourth focus:outline-none focus:border-red-800 focus:shadow-outline-red active:bg-red-800 transition duration-150 ease-in-out">
+                            Se connecter
                         </button>
                     </div>
 

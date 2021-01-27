@@ -7,6 +7,7 @@ export default withRouter((props)=>{
 
     const [isOpenMobile,setIsOpenMobile] = useState(false)
 
+
     
     //Header qui s'affiche seulement quand on est connecté    
         return (
@@ -141,7 +142,7 @@ export default withRouter((props)=>{
                                     </div>
                                     <div className="ml-3">
                                         <div className="text-base font-medium leading-6 text-gray-800">
-                                            {getUserAuth()}
+                                            
                                         </div>
                                         <div className="text-sm font-medium leading-5 text-gray-500">
                                             Valentin
