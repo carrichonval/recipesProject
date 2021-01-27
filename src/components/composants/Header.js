@@ -44,9 +44,11 @@ export default withRouter((props)=>{
                                 <Link  to="/users" className={(props.location.pathname === "/users" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth  transition duration-150 ease-in-out"}>
                                     Utilisateurs
                                 </Link>
-                                <Link  to="/profil" className={(props.location.pathname === "/profil" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth  transition duration-150 ease-in-out"}>
-                                    Mon profil
-                                </Link>
+                                {isAuthenticated() && 
+                                    <Link  to="/profil" className={(props.location.pathname === "/profil" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth  transition duration-150 ease-in-out"}>
+                                        Mon profil
+                                    </Link>
+                                }
 
                             </div>
                         </div>

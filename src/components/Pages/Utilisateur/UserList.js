@@ -1,8 +1,34 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 
 export default function UserList (props){
 
-    
+    const [users,setUsers] = useState([])
+
+    useEffect(() => {
+        fetchUsers()
+    }, []);
+
+    const fetchUsers = () =>{
+        fetch(process.env.REACT_APP_API_URL+'/users', {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((json) => {
+          console.log(json)
+          setUsers(json)
+        })
+        .catch((error) => {
+            
+        });
+    }
     return (
         <>
         
