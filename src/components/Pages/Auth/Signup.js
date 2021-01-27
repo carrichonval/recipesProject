@@ -38,7 +38,7 @@ export default function Signup(props) {
         }
     }, [])
 
-    //Permet de verifier si l'adresse mail et le mot de passe sont valide avant de s'inscrire
+    //Permet de verifier si toutes les infos de l'user sont corrects avant d'enregistrer
     useEffect(() => {
         if(checkAvailableEmail(user.email) && checkAvailableLogin(user.login) && isValidEmail(user.email) && isValidPassword(user.password,user.confirmPassword) && user.first_name != "" && user.last_name != "" && user.login != ""){
             setIsValid(true)
@@ -47,7 +47,7 @@ export default function Signup(props) {
         }
     }, [user])
 
-    //Permet de verifier si l'adresse mail et le mot de passe sont valide avant de s'inscrire
+    //Permet de verifier si l'adresse mail et le login ne sont pas déjà existant
     useEffect(() => {
         checkAvailableEmail(user.email)
         checkAvailableLogin(user.login)
@@ -223,7 +223,7 @@ return (
 
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         {error &&
-            <div className="rounded-md bg-red-200 p-4 mt-4">
+            <div className="rounded-md bg-red-200 p-4 mt-4 mx-4">
                 <div className="flex">
                     <div className="flex-shrink-0">
                         <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
@@ -239,7 +239,7 @@ return (
             </div>
         }
         {!availableEmail &&
-            <div className="rounded-md bg-red-200 p-4 mt-4">
+            <div className="rounded-md bg-red-200 p-4 mt-4 mx-4">
                 <div className="flex">
                     <div className="flex-shrink-0">
                         <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
@@ -255,7 +255,7 @@ return (
             </div>
         }
         {!availableLogin &&
-            <div className="rounded-md bg-red-200 p-4 mt-4">
+            <div className="rounded-md bg-red-200 p-4 mt-4 mx-4">
                 <div className="flex">
                     <div className="flex-shrink-0">
                         <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
