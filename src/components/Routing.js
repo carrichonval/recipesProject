@@ -7,7 +7,6 @@ import Home from './Pages/Home'
 import NotFound from './Pages/NotFound'
 import Header from './composants/Header'
 import Dashboard from './Pages/Dashboard'
-import Search from './Pages/Search'
 import Profil from './Pages/Utilisateur/Profil'
 import UserList from './Pages/Utilisateur/UserList';
 import RecipesList from './Pages/Recette/RecipesList'
@@ -28,7 +27,6 @@ const Routing =()=> (
                 <Route path="/login" render={(props) => (<Login {...props} />)} />
                 <Route path="/signup" render={(props) => (<Signup {...props} />)} />
 
-                <Route component={Search} path="/search" exact />
                 <Route component={Dashboard} path="/dashboard" exact />
                 <Route component={RecipesList} path="/recipes" exact />
                 <Route component={Cook} path="/cook" exact />

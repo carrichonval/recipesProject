@@ -63,11 +63,7 @@ export default function Dashboard (props) {
         });
     }
 
-    if(!statsPerso.achieves){
-        return null
-    }
 
-    
 
     return(
         <>  
@@ -185,7 +181,7 @@ export default function Dashboard (props) {
                                                         </dt>
                                                         <Spring
                                                             from={{number:0}}
-                                                            to={{number:statsPerso.achieves.achieve}}
+                                                            to={{number:statsPerso.achieves && statsPerso.achieves.achieve}}
                                                             config={{duration:500}}
                                                         >
                                                             {props => (

@@ -30,9 +30,6 @@ export default withRouter((props)=>{
                                 <Link  to="/" className={(props.location.pathname === "/" ? "border-second " : "border-transparent ") + "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 focus:outline-none hover:text-gray-600 hover:border-fourth transition duration-150 ease-in-out"}>
                                     Accueil
                                 </Link>
-                                <Link  to="/search" className={(props.location.pathname === "/search" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth transition duration-150 ease-in-out"}>
-                                    Recherche
-                                </Link>
                                 <Link  to="/dashboard" className={(props.location.pathname === "/dashboard" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth transition duration-150 ease-in-out"}>
                                     Statistiques
                                 </Link>
@@ -111,9 +108,6 @@ export default withRouter((props)=>{
                     <div className="pt-2 pb-3 border-b border-gray-300">
                         <Link onClick={()=>setIsOpenMobile(!isOpenMobile)} to="/" className={(props.location.pathname === "/" ? "border-primary bg-fourth text-gray-900 " : "border-transparent ") +" block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-gray-600 transition hover:text-gray-700 hover:border-fourth duration-150 ease-in-out"}>
                             Accueil
-                        </Link>
-                        <Link onClick={()=>setIsOpenMobile(!isOpenMobile)} to="/search" className={(props.location.pathname === "/search" ? "border-primary bg-fourth text-gray-900 " : "border-transparent ") +" mt-1 block pl-3 pr-4 py-2 border-l-4  text-base font-medium text-gray-600 hover:text-gray-700 hover:border-fourth transition duration-150 ease-in-out"}>
-                            Recherche
                         </Link>
                         <Link onClick={()=>setIsOpenMobile(!isOpenMobile)} to="/dashboard" className={(props.location.pathname === "/dashboard" ? "border-primary bg-fourth text-gray-900 " : "border-transparent ") +" mt-1 block pl-3 pr-4 py-2 border-l-4  text-base font-medium text-gray-600 hover:text-gray-700 hover:border-fourth transition duration-150 ease-in-out"}>
                             Statistiques
