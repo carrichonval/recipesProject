@@ -5,11 +5,7 @@ export const isAdmin = () => {
     try {
         const decoded = jwt.verify(localStorage.getItem('token'), process.env.REACT_APP_TOKEN_KEY);
         if(decoded){
-            if(decoded.role === process.env.REACT_APP_ROLE_ADMIN){
-                return true
-            }else{
-                return false
-            }
+            return decoded.role === process.env.REACT_APP_ROLE_ADMIN
         }else{   
             return false
         }
@@ -21,14 +17,9 @@ export const isAdmin = () => {
 
 //Vérifie si l'utilisateur est connecté
 export const isAuthenticated = () => {
-
     try {
         const decoded = jwt.verify(localStorage.getItem('token'), process.env.REACT_APP_TOKEN_KEY);
-        if(decoded){
-            return true
-        }else{
-            return false
-        }
+        return decoded
     } catch (error) {
         return false
     }

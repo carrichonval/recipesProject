@@ -44,7 +44,7 @@ export default function RecipesList (props){
         <>
         
             <div className={" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col"}>
-            <div className="flex flex-col lg:flex-row w-full">
+                <div className="flex flex-col lg:flex-row w-full">
                     <div className="flex flex-row items-center justify-center mb-3 w-full lg:w-1/3">
                         <input onChange={(e)=>setSearchName(e.target.value)} className="w-full bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block appearance-none leading-normal" type="text" placeholder="Rechercher"/>
                     </div>
@@ -97,13 +97,12 @@ export default function RecipesList (props){
                             isSearchable
                         />
                     </div>
-                     
                 </div>
 
                 <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
                     {recipes.map((recipe)=>{
-                         if(recipe.name.toLowerCase().search(searchName.toLowerCase()) === -1 ){
+                        if(recipe.name.toLowerCase().search(searchName.toLowerCase()) === -1 ){
                             return null
                         }
                         if(searchType){
@@ -137,7 +136,6 @@ const gestionType = (type)=>{
             return (
                 <span class="px-2 py-1 text-teal-800 text-xs leading-4 font-medium bg-teal-200 rounded-full">{type}</span>
             )
-            break;
         case "entree":
             return(
                 <span class="px-2 py-1 text-teal-800 text-xs leading-4 font-medium bg-green-200 rounded-full">{type}</span>
