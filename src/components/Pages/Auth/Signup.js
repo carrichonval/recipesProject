@@ -16,6 +16,7 @@ export default function Signup(props) {
             "password": "",
             "confirmPassword": "",
             "description": "",
+            "achieve":0
         }
     )
 
