@@ -1,7 +1,10 @@
 import React,{useState,useEffect} from 'react';
 import moment from 'moment'
+import {withRouter} from "react-router-dom";
 
-export default function UserList (props){
+
+export default withRouter((props)=>{
+
 
     const [users,setUsers] = useState([])
 
@@ -50,7 +53,7 @@ export default function UserList (props){
                             return null
                         }
                         return(
-                            <Item user={user}/>
+                            <Item user={user} props={props} />
                         )
                     })}
                     
@@ -60,16 +63,15 @@ export default function UserList (props){
         </> 
 
     )
-}
+})
 
 
 
 
 
-const Item = ({user}) =>{
+const Item = ({user,props}) =>{
 
     const [today,setToday] = useState( moment().format("YYYY-MM-DD"))
-
     function countdownDate(date){
         var a = moment(today, 'YYYY-MM-DD');
         var b = moment(date, 'YYYY-MM-DD');
@@ -82,7 +84,7 @@ const Item = ({user}) =>{
 
     }
     return(
-        <li class="cursor-pointer col-span-1 bg-white rounded-lg shadow">
+        <li onClick={()=>props.history.push("/users/"+user.id)} class="cursor-pointer col-span-1 bg-white rounded-lg shadow">
             <div class="w-full flex items-center justify-between p-6 space-x-6">
             <div class="flex-1 truncate">
                 <div class="flex items-center space-x-3">
