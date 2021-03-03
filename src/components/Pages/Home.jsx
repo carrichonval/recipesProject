@@ -81,6 +81,7 @@ const Publication = ({feed,users}) => {
     
     const [findLike,setFindLike] = useState(false)
     const [showLikes,setShowLikes] = useState(false)
+    const [hidden,setHidden] = useState(true)
 
 
     useEffect(() => {
@@ -151,17 +152,40 @@ const Publication = ({feed,users}) => {
                         </div>
                     </div>
                     <div onClick={()=>setShowLikes(true)} class="font-semibold text-sm mx-4 mt-2 mb-2 cursor-pointer">{feed.result_likes.length} likes</div>
-                    <div class="font-semibold text-sm mx-4 mt-2 mb-4 flex flex-col">
-                        <div className="flex flex-row border-b border-gray-500 ">Commentaires</div>
-                            {feed.result_comments.map((r)=>{
-                                return(
-                                    <div className="grid grid-cols-3 ml-2">
-                                        <div className="font-medium mr-2">{findUser(r.user_id)}</div>
-                                        <div className="font-normal">{r.comment}</div>
-                                    </div>
-                                )
-                            })}
-                    </div>
+                    {feed.result_comments.length >0 ?
+                        <div class="font-semibold text-sm mx-4 mt-2 mb-4 flex flex-col">
+                            <div className="flex flex-row border-b border-gray-500 ">Commentaires</div>
+                                {feed.result_comments.map((r,i)=>{
+                                   if(i > 2){
+                                       return (
+                                        <div className={(hidden ? "hidden " : "") + " grid grid-cols-3 ml-2"}>
+                                            <div className="font-medium mr-2">{findUser(r.user_id)}</div>
+                                            <div className="font-normal">{r.comment}</div>
+                                        </div>
+                                       )
+                                   }else if(i == 2){
+                                       console.log("pass")
+                                        return(
+                                            <div className="grid my-2 grid-cols-3">
+                                                <div onClick={()=>setHidden(!hidden)} className="font-normal col-span-2 cursor-pointer">
+                                                    {hidden ?
+                                                    "Voir les autres commentaires .." :
+                                                    "Masquer les autres commentaires .. "
+                                                    }
+                                                </div>
+                                            </div>
+                                        )
+                                   }else{
+                                    return(
+                                        <div className="grid grid-cols-3 ml-2">
+                                            <div className="font-medium mr-2">{findUser(r.user_id)}</div>
+                                            <div className="font-normal">{r.comment}</div>
+                                        </div>
+                                    )
+                                   }
+                                })}
+                        </div>
+                    :null}
                 </div>
             </div>
         </>
