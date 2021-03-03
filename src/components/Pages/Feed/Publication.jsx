@@ -1,85 +1,19 @@
-import React, { useState,useEffect} from 'react';
+import React, {useState,useEffect} from 'react'
 import lodash from 'lodash'
+import ModalInfosLikes from './ModalInfosLikes'
+import {getUserAuth} from '../../functions/auth'
 
-export default function Home (props){
-
-    const [feed,setFeed] = useState([])
-    const [users,setUsers] = useState([])
-
-    useEffect(() => {
-        fetchFeed()
-        fetchUsers()
-    }, []);
-
-    const fetchFeed = () =>{
-        fetch(process.env.REACT_APP_API_URL+'/results', {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            return response.json();
-        })
-        .then((json) => {
-          console.log(json)
-          setFeed(json)
-        })
-        .catch((error) => {
-            console.log(error)
-        });
-    }
-
-    const fetchUsers = () =>{
-        fetch(process.env.REACT_APP_API_URL+'/users', {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            return response.json();
-        })
-        .then((json) => {
-          console.log(json)
-          setUsers(json)
-        })
-        .catch((error) => {
-            
-        });
-    }
-
-    console.log(users)
-    
-    return (
-        <>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col">
-                <ul class="grid grid-cols-1 gap-6  lg:grid-cols-3 xl:grid-cols-3">
-                    {feed.map((f)=>{
-                        return(
-                            <Publication feed={f} users={users} />
-                        )
-                    })}
-                </ul>
-            </div>
-        </>
-            
-
-    )
-}
 
 // red #B4403C
-const Publication = ({feed,users}) => {
+const Publication = ({feed,users,fetchFeed}) => {
     
     const [findLike,setFindLike] = useState(false)
     const [showLikes,setShowLikes] = useState(false)
     const [hidden,setHidden] = useState(true)
+    const [hiddenComment,setHiddenComment] = useState(true)
+    const [userAuth,setUserAuth] = useState(getUserAuth())
+    const [haveComment,setHaveComment] = useState(false)
+    const [comment,setComment] = useState("")
 
 
     useEffect(() => {
@@ -110,10 +44,61 @@ const Publication = ({feed,users}) => {
         }
     }
 
+    //Vérifie si l'utilisateur à déjà laisser un commentaire sur la plublication
+    const checkAddComment = () =>{
+        let find = lodash.find(feed.result_comments,(result)=>{
+            if(result.user_id == userAuth.id){
+                return true
+            }
+        })
+        if(!find){
+           setHiddenComment(!hiddenComment)
+        }else{
+            setHaveComment(true)
+            setTimeout(() => {
+                setHaveComment(false)
+            }, 2000);
+        }
+    }
+
+    const addComment = () => {
+        console.log(comment)
+        //Cacher la zone d'ajout
+        setHiddenComment(true)
+
+        //Ajouter en base le commentaire
+        fetch(process.env.REACT_APP_API_URL + '/comments', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                result_id:feed.id,
+                user_id: userAuth.id,
+                comment: comment
+            })
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((json) => {
+            if(json){
+                fetchFeed()
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+
+    }
+
 
     return(
         <>
-            {showLikes ? <ModalInfos setShowLikes={setShowLikes} likes={feed.result_likes} users={users} /> : null}
+            {showLikes ? <ModalInfosLikes setShowLikes={setShowLikes} likes={feed.result_likes} users={users} /> : null}
             <div class="bg-gray-100 lg:col-start-2 justify-center flex ">
                 <div class="bg-white border rounded-md max-w-md w-full">
                     <div class="flex items-center px-4 py-3">
@@ -136,7 +121,7 @@ const Publication = ({feed,users}) => {
                                 <path d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
                                 </svg>
                             }
-                            <svg className="cursor-pointer" fill="#262626" height="24" viewBox="0 0 48 48" width="24">
+                            <svg onClick={()=>checkAddComment()} className="cursor-pointer" fill="#262626" height="24" viewBox="0 0 48 48" width="24">
                                 <path clip-rule="evenodd" d="M47.5 46.1l-2.8-11c1.8-3.3 2.8-7.1 2.8-11.1C47.5 11 37 .5 24 .5S.5 11 .5 24 11 47.5 24 47.5c4 0 7.8-1 11.1-2.8l11 2.8c.8.2 1.6-.6 1.4-1.4zm-3-22.1c0 4-1 7-2.6 10-.2.4-.3.9-.2 1.4l2.1 8.4-8.3-2.1c-.5-.1-1-.1-1.4.2-1.8 1-5.2 2.6-10 2.6-11.4 0-20.6-9.2-20.6-20.5S12.7 3.5 24 3.5 44.5 12.7 44.5 24z" fill-rule="evenodd"></path>
                             </svg>
                             <svg className="cursor-pointer" fill="#262626" height="24" viewBox="0 0 48 48" width="24">
@@ -149,6 +134,30 @@ const Publication = ({feed,users}) => {
                             </svg>
                         </div>
                     </div>
+                    <div className={ (hiddenComment ? "hidden " : "") + " grid grid-cols-4 ml-4"}>
+                        <div className="col-span-3">
+                            <input onChange={(e)=>setComment(e.target.value)} className="w-full bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg  px-4 block appearance-none leading-normal" type="text" placeholder="Commentaire .."/>
+                        </div>
+                        <div onClick={()=>addComment()} className="cursor-pointer flex mx-4 rounded-md justify-center hover:bg-blue-400 bg-fourth ">Ajouter</div>
+                    </div>
+                    {haveComment ?
+                        <div className="flex w-full">
+                            <div className="rounded-md bg-blue-200 p-2 mt-2 mx-4 w-full">
+                                <div className="flex">
+                                    <div className="flex-shrink-0">
+                                        <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div className="ml-3">
+                                        <h3 className="text-sm leading-5 font-medium text-blue-800">
+                                            Tu as déjà commenté cette publication
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    :null}
                     <div onClick={()=>setShowLikes(true)} class="font-semibold text-sm mx-4 mt-2 mb-2 cursor-pointer">{feed.result_likes.length} likes</div>
                     {feed.result_comments.length >0 ?
                         <div class="font-semibold text-sm mx-4 mt-2 mb-4 flex flex-col">
@@ -158,11 +167,10 @@ const Publication = ({feed,users}) => {
                                        return (
                                         <div className={(hidden ? "hidden " : "") + " grid grid-cols-3 ml-2"}>
                                             <div className="font-medium mr-2">{findUser(r.user_id)}</div>
-                                            <div className="font-normal">{r.comment}</div>
+                                            <div className="col-span-2 font-normal">{r.comment}</div>
                                         </div>
                                        )
                                    }else if(i == 2){
-                                       console.log("pass")
                                         return(
                                             <div className="grid my-2 grid-cols-3">
                                                 <div onClick={()=>setHidden(!hidden)} className="font-normal col-span-2 cursor-pointer">
@@ -177,7 +185,7 @@ const Publication = ({feed,users}) => {
                                     return(
                                         <div className="grid grid-cols-3 ml-2">
                                             <div className="font-medium mr-2">{findUser(r.user_id)}</div>
-                                            <div className="font-normal">{r.comment}</div>
+                                            <div className="col-span-2 font-normal">{r.comment}</div>
                                         </div>
                                     )
                                    }
@@ -191,76 +199,4 @@ const Publication = ({feed,users}) => {
 }
 
 
-const ModalInfos = ({setShowLikes,likes,users}) =>{
-
-    const findUser = (user_id) => {
-        let find = lodash.find(users,(user)=>{
-            if(user.id == user_id){
-                return true
-            }
-        })
-        if(find){
-            return find.first_name + ' ' + find.last_name
-        }else{
-            return ""
-        }
-    }
-
-    return(
-<div class="fixed z-10 inset-0 overflow-y-auto">
-  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-
-    <div class="fixed inset-0 transition-opacity">
-      <div onClick={()=>setShowLikes(false)} class="absolute inset-0 bg-gray-500 opacity-75"></div>
-    </div>
-
-    <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
-
-    <div class="w-2/3 inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:p-6">
-      
-
-<div class="bg-white shadow overflow-hidden sm:rounded-lg">
-  <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-    <h3 class="text-lg leading-6 font-medium text-gray-900">
-      Personnes ayant likées
-    </h3>
-  </div>
-  <div class="px-4 py-5 sm:p-0">
-    <dl>
-        {likes.map((like,i)=>{
-            console.log(like)
-            if(i == 0 ){
-                return(
-                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium ">
-                            {findUser(like.user_id)}
-                        </dt>
-                    </div>
-                )
-            }else{
-                return (
-                    <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium ">
-                            {findUser(like.user_id)}
-                        </dt>
-                    </div>
-                )
-            }
-        })}
-    </dl>
-  </div>
-</div>
-<div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-    <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-        <button onClick={()=>setShowLikes(false)} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-            Fermer
-        </button>
-    </span>
-</div>
-    </div>
-
-  </div>
-</div>
-
-    )
-}
+export default Publication

@@ -3,7 +3,7 @@ import '../App.css';
 import {Router,Route,Switch,Redirect} from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 
-import Home from './Pages/Home'
+import Feed from './Pages/Feed/Index'
 import NotFound from './Pages/NotFound'
 import Header from './composants/Header'
 import Dashboard from './Pages/Dashboard'
@@ -23,7 +23,7 @@ const Routing =()=> (
         <Router history={customHistory} >
             <Header/>
             <Switch>
-                <Route component={Home} path="/" exact />
+                <Route component={Feed} path="/" exact />
 
                 <Route path="/login" render={(props) => (<Login {...props} />)} />
                 <Route path="/signup" render={(props) => (<Signup {...props} />)} />
