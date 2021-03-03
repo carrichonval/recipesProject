@@ -60,15 +60,13 @@ export default function Home (props){
     return (
         <>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col">
-            <ul class="grid grid-cols-1 gap-6  lg:grid-cols-3 xl:grid-cols-3">
-               {feed.map((f)=>{
-                   return(
-                       <Publication feed={f} users={users} />
-                   )
-               })}
-
-            </ul>
-
+                <ul class="grid grid-cols-1 gap-6  lg:grid-cols-3 xl:grid-cols-3">
+                    {feed.map((f)=>{
+                        return(
+                            <Publication feed={f} users={users} />
+                        )
+                    })}
+                </ul>
             </div>
         </>
             

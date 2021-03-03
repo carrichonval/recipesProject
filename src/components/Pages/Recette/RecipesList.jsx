@@ -10,6 +10,51 @@ export default function RecipesList (props){
     const [searchName,setSearchName] = useState("")
     const [searchType,setSearchType] = useState("")
     const [searchNote,setSearchNote] = useState("")
+    const options = [
+        {
+            value:null,
+            label:"Pas noté"
+        },
+        {
+            value:"0",
+            label:"0"
+        },
+        {
+            value:"1",
+            label:"1"
+        },
+        {
+            value:"2",
+            label:"2"
+        },
+        {
+            value:"3",
+            label:"3"
+        },
+        {
+            value:"4",
+            label:"4"
+        },
+        {
+            value:"5",
+            label:"5"
+        },
+    ]
+
+    const optionsTrie = [
+        {
+            value:"0",
+            label:"Ordre alphabétique"
+        },
+        {
+            value:"1",
+            label:"Les plus réalisés"
+        },
+        {
+            value:"2",
+            label:"Les mieux notés"
+        },
+    ]
 
     //Pagination que si l'on a + de 8 recettes
     const { next, prev, jump, currentPage, maxPage,startIndex, endIndex , paginate} = usePagination(recipes ? recipes : [],8)
@@ -44,6 +89,25 @@ export default function RecipesList (props){
             console.log(error)
         });
     }
+
+    const trierPar = (e) => {
+        switch (e.value) {
+            case "0":
+                let test = lodash.orderBy(recipes,["name"],["asc"])
+                setRecipes(test)
+                break;
+            case "1":
+                let test2 = lodash.orderBy(recipes,["achieve"],["desc"])
+                setRecipes(test2)
+                break;
+            case "2":
+                let test3 = lodash.orderBy(recipes,["note"],["desc"])
+                setRecipes(test3)
+                break;
+            default:
+                break;
+        }
+    }
     
     return (
         <>
@@ -65,38 +129,19 @@ export default function RecipesList (props){
                     </div>
                     <div className="flex flex-row mb-3 w-full lg:w-1/5 lg:ml-2">
                         <Select
-                            options={[
-                                {
-                                    value:null,
-                                    label:"Pas noté"
-                                },
-                                {
-                                    value:"0",
-                                    label:"0"
-                                },
-                                {
-                                    value:"1",
-                                    label:"1"
-                                },
-                                {
-                                    value:"2",
-                                    label:"2"
-                                },
-                                {
-                                    value:"3",
-                                    label:"3"
-                                },
-                                {
-                                    value:"4",
-                                    label:"4"
-                                },
-                                {
-                                    value:"5",
-                                    label:"5"
-                                },
-                            ]}
+                            options={options}
                             onChange = {(e)=>setSearchNote(e)}
                             placeholder="Filtrer par note"
+                            className="w-full"
+                            isClearable
+                            isSearchable
+                        />
+                    </div>
+                    <div className="flex flex-row mb-3 w-full lg:w-1/5 lg:ml-2">
+                        <Select
+                            options={optionsTrie}
+                            onChange = {(e)=>trierPar(e)}
+                            placeholder="Trier par"
                             className="w-full"
                             isClearable
                             isSearchable
