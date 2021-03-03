@@ -1,6 +1,8 @@
 import React,{useState,useEffect} from 'react';
 import Select from 'react-select';
 import lodash from "lodash"
+import Pagination from '../../composants/Pagination';
+import usePagination from '../../hooks/usePagination';
 
 export default function RecipesList (props){
 
@@ -8,6 +10,7 @@ export default function RecipesList (props){
     const [searchName,setSearchName] = useState("")
     const [searchType,setSearchType] = useState("")
     const [searchNote,setSearchNote] = useState("")
+    const { next, prev, jump, currentPage, maxPage,startIndex, endIndex , paginate} = usePagination(recipes ? recipes : [],1)
 
     useEffect(() => {
         fetchRecipes()
@@ -101,7 +104,7 @@ export default function RecipesList (props){
 
                 <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
-                    {recipes.map((recipe)=>{
+                    {recipes.slice(startIndex, endIndex).map((recipe)=>{
                         if(recipe.name.toLowerCase().search(searchName.toLowerCase()) === -1 ){
                             return null
                         }
@@ -122,6 +125,8 @@ export default function RecipesList (props){
                     })}
 
                 </ul>
+
+                <Pagination currentPage={currentPage} next={next} prev={prev} jump={jump} paginate={paginate} maxPage={maxPage} />
 
             </div>
         </>
