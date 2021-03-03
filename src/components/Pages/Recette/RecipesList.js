@@ -10,7 +10,9 @@ export default function RecipesList (props){
     const [searchName,setSearchName] = useState("")
     const [searchType,setSearchType] = useState("")
     const [searchNote,setSearchNote] = useState("")
-    const { next, prev, jump, currentPage, maxPage,startIndex, endIndex , paginate} = usePagination(recipes ? recipes : [],1)
+
+    //Pagination que si l'on a + de 8 recettes
+    const { next, prev, jump, currentPage, maxPage,startIndex, endIndex , paginate} = usePagination(recipes ? recipes : [],8)
 
     useEffect(() => {
         fetchRecipes()

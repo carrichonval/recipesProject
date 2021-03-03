@@ -1,6 +1,8 @@
 import React,{useState,useEffect} from 'react';
 import moment from 'moment'
 import {withRouter} from "react-router-dom";
+import usePagination from "../../hooks/usePagination"
+import Pagination from "../../composants/Pagination"
 
 
 export default withRouter((props)=>{
@@ -9,6 +11,9 @@ export default withRouter((props)=>{
     const [users,setUsers] = useState([])
 
     const [searchName,setSearchName] = useState("")
+    
+     //Pagination que si l'on a + de 16 users
+     const { next, prev, jump, currentPage, maxPage,startIndex, endIndex , paginate} = usePagination(users ? users : [],16)
 
     useEffect(() => {
         fetchUsers()
@@ -48,7 +53,7 @@ export default withRouter((props)=>{
 
                     <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
-                    {users.map((user)=>{
+                    {users.slice(startIndex, endIndex).map((user)=>{
                         if((user.first_name+user.last_name).toLowerCase().search(searchName.toLowerCase()) === -1){
                             return null
                         }
@@ -58,6 +63,8 @@ export default withRouter((props)=>{
                     })}
                     
                     </ul>
+
+                    <Pagination currentPage={currentPage} next={next} prev={prev} jump={jump} paginate={paginate} maxPage={maxPage} />
                 
             </div>
         </> 
