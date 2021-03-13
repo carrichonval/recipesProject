@@ -4,6 +4,7 @@ import lodash from "lodash"
 import Pagination from '../../composants/Pagination';
 import usePagination from '../../hooks/usePagination';
 import ItemCard from './ItemCard'
+import FetchDataLoader from '../../composants/FetchDataLoader'
 
 export default function RecipesList (props){
 
@@ -108,6 +109,10 @@ export default function RecipesList (props){
             default:
                 break;
         }
+    }
+
+    if(recipes.length == 0){
+        return  <FetchDataLoader text="Récupération des données" />
     }
     
     return (

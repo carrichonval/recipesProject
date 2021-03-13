@@ -3,21 +3,13 @@ import {useParams,useLocation} from 'react-router-dom'
 import {Spring} from 'react-spring/renderprops'
 import moment from 'moment'
 import lodash from 'lodash'
+import FetchDataLoader from '../../composants/FetchDataLoader'
 
 export const Infos = (props) =>{
 
     const params = useParams()
     const location = useLocation()
     const [user,setUser] = useState(null)
-
-
-    // A afficher
-    /*
-        - achieve
-        - nombre résultat postés
-        - nombre de commentaires
-        - nombre de likes
-    */
 
 
     // Recupere l'object si on provient d'un lien, sinon on appel l'api pour récuperer l'utilisateur
@@ -69,7 +61,7 @@ export const Infos = (props) =>{
     console.log(user)
 
     if(user == null){
-        return null
+        return <FetchDataLoader text="Récupérations des informations"></FetchDataLoader>
     }else{
         return (
             <>
