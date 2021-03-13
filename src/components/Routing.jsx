@@ -38,6 +38,12 @@ const Routing =()=> (
                 <Route component={UserList} path="/users" exact />
                 <Route component={Infos} path="/users/:id" exact />
 
+                {/*Route pour Mes publications*/}
+                {/*<Route component={MyFeed} path="/myFeed" exact />*/}
+
+                {/*Route pour Mes recettes*/}
+                {/*<Route component={MyRecipes} path="/myRecipes" exact />*/}
+
                 <Route component={Profil} path="/profil" exact />
 
                 <Route component={NotFound} path='*'/>

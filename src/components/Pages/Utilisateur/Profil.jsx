@@ -1,8 +1,9 @@
 import React,{useState} from 'react';
 import {getUserAuth} from '../../functions/auth';
+import {withRouter,Link} from "react-router-dom";
 
 
-export default function Account (props){
+export default withRouter((props)=>{
 
     const [user,setUser] = useState(getUserAuth())
     const [showInfosPersos,setShowInfosPersos] = useState(false)
@@ -12,7 +13,7 @@ export default function Account (props){
 
     return (
         <>
-            {showInfosPersos ? <ModalInfos setShowInfosPersos={setShowInfosPersos} user={user} /> : null}
+            
             <div className="account max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
                 <div className="flex mt-8">
                     <div class="bg-white overflow-hidden shadow rounded-lg w-full p-5 flex flex-row">
@@ -62,7 +63,12 @@ export default function Account (props){
                         </div>
                     </div>
 
-                    <div onClick={()=>setShowInfosPersos(true)} class="bg-white overflow-hidden shadow rounded-lg col-span-1 cursor-pointer hover:shadow-lg">
+                    <Link
+                      to={{
+                        pathname: "/users/"+user.id,
+                        state: { user: user }
+                      }}>
+                    <div class="bg-white overflow-hidden shadow rounded-lg col-span-1 cursor-pointer hover:shadow-lg">
                         <div class="px-4 py-6 ">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 bg-fourth rounded-md p-6">
@@ -80,6 +86,7 @@ export default function Account (props){
                             </div>
                         </div>
                     </div>
+                    </Link>
                     <div class="bg-white overflow-hidden shadow rounded-lg col-span-1 cursor-pointer hover:shadow-lg">
                         <div class="px-4 py-6 ">
                             <div class="flex items-center">
@@ -106,7 +113,7 @@ export default function Account (props){
             </div>
         </>
     )
-}
+})
 
 const ModalInfos = ({setShowInfosPersos,user}) =>{
     return(
