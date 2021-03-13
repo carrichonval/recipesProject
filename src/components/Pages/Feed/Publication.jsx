@@ -14,7 +14,7 @@ const Publication = ({feed,users,fetchFeed}) => {
     const [userAuth,setUserAuth] = useState(getUserAuth())
     const [haveComment,setHaveComment] = useState(false)
     const [comment,setComment] = useState("")
-
+    const [copyLink,setCopyLink] = useState(false)
 
     useEffect(() => {
         searchLike(feed)
@@ -152,6 +152,18 @@ const Publication = ({feed,users,fetchFeed}) => {
         });
     }
 
+    const addPressPaper = () =>{
+        navigator.clipboard.writeText(process.env.REACT_APP_URL+"/results/"+feed.id)
+        if(!copyLink){
+            console.log('pass')
+            setCopyLink(true)
+            setTimeout(() => {
+                setCopyLink(false)
+        }, 2000);
+        }
+        
+    }
+
     return(
         <>
             {showLikes ? <ModalInfosLikes setShowLikes={setShowLikes} likes={feed.result_likes} users={users} /> : null}
@@ -181,7 +193,7 @@ const Publication = ({feed,users,fetchFeed}) => {
                                 <svg onClick={()=>checkAddComment()} className="cursor-pointer" fill="#262626" height="24" viewBox="0 0 48 48" width="24">
                                     <path clip-rule="evenodd" d="M47.5 46.1l-2.8-11c1.8-3.3 2.8-7.1 2.8-11.1C47.5 11 37 .5 24 .5S.5 11 .5 24 11 47.5 24 47.5c4 0 7.8-1 11.1-2.8l11 2.8c.8.2 1.6-.6 1.4-1.4zm-3-22.1c0 4-1 7-2.6 10-.2.4-.3.9-.2 1.4l2.1 8.4-8.3-2.1c-.5-.1-1-.1-1.4.2-1.8 1-5.2 2.6-10 2.6-11.4 0-20.6-9.2-20.6-20.5S12.7 3.5 24 3.5 44.5 12.7 44.5 24z" fill-rule="evenodd"></path>
                                 </svg>
-                                <svg onClick={() => {navigator.clipboard.writeText(process.env.REACT_APP_URL+"/results/"+feed.id)}} className="cursor-pointer" fill="#262626" height="24" viewBox="0 0 48 48" width="24">
+                                <svg onClick={() => addPressPaper()} className="cursor-pointer" fill="#262626" height="24" viewBox="0 0 48 48" width="24">
                                     <path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path>
                                 </svg>
                             </div>
@@ -194,7 +206,7 @@ const Publication = ({feed,users,fetchFeed}) => {
                                 <svg className="cursor-pointer" fill="#262626" height="24" viewBox="0 0 48 48" width="24">
                                     <path clip-rule="evenodd" d="M47.5 46.1l-2.8-11c1.8-3.3 2.8-7.1 2.8-11.1C47.5 11 37 .5 24 .5S.5 11 .5 24 11 47.5 24 47.5c4 0 7.8-1 11.1-2.8l11 2.8c.8.2 1.6-.6 1.4-1.4zm-3-22.1c0 4-1 7-2.6 10-.2.4-.3.9-.2 1.4l2.1 8.4-8.3-2.1c-.5-.1-1-.1-1.4.2-1.8 1-5.2 2.6-10 2.6-11.4 0-20.6-9.2-20.6-20.5S12.7 3.5 24 3.5 44.5 12.7 44.5 24z" fill-rule="evenodd"></path>
                                 </svg>
-                                <svg onClick={() => {navigator.clipboard.writeText(process.env.REACT_APP_URL+"/results/"+feed.id)}} className="cursor-pointer" fill="#262626" height="24" viewBox="0 0 48 48" width="24">
+                                <svg onClick={() => addPressPaper()} className="cursor-pointer" fill="#262626" height="24" viewBox="0 0 48 48" width="24">
                                     <path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path>
                                 </svg>
                             </div>
@@ -223,6 +235,24 @@ const Publication = ({feed,users,fetchFeed}) => {
                                     <div className="ml-3">
                                         <h3 className="text-sm leading-5 font-medium text-blue-800">
                                             Tu as déjà commenté cette publication
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    :null}
+                    {copyLink ?
+                        <div className="flex w-full">
+                            <div className="rounded-md bg-green-200 p-2 mt-2 mx-4 w-full">
+                                <div className="flex">
+                                    <div className="flex-shrink-0">
+                                        <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div className="ml-3">
+                                        <h3 className="text-sm leading-5 font-medium text-green-800">
+                                            Le lien à été copié dans le presse-papier
                                         </h3>
                                     </div>
                                 </div>

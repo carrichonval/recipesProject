@@ -44,6 +44,9 @@ const Routing =()=> (
                 {/*Route pour Mes recettes*/}
                 {/*<Route component={MyRecipes} path="/myRecipes" exact />*/}
 
+                {/*Route pour Support */}
+                {/*<Route component={Support} path="/support" exact />*/}
+
                 <Route component={Profil} path="/profil" exact />
 
                 <Route component={NotFound} path='*'/>
