@@ -2,11 +2,14 @@ import React, {useState,useEffect} from 'react'
 import lodash from 'lodash'
 import ModalInfosLikes from './ModalInfosLikes'
 import {getUserAuth,isAuthenticated} from '../../functions/auth'
+import {withRouter,Link} from 'react-router-dom'
 
 
 // red #B4403C
-const Publication = ({feed,users,fetchFeed}) => {
-    
+
+export default withRouter((props)=>{
+    const {feed,fetchFeed,users,location} = props
+    console.log(feed)
     const [findLike,setFindLike] = useState(false)
     const [showLikes,setShowLikes] = useState(false)
     const [hidden,setHidden] = useState(true)
@@ -169,8 +172,8 @@ const Publication = ({feed,users,fetchFeed}) => {
             {showLikes ? <ModalInfosLikes setShowLikes={setShowLikes} likes={feed.result_likes} users={users} /> : null}
             <div class="bg-gray-100 lg:col-start-2 justify-center flex">
                 <div class="bg-white border rounded-md max-w-md w-full">
-                    <div class="flex items-center px-4 py-3">
-                        <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60"/>
+                    <div class="  flex items-center px-4 py-3">
+                        <img onClick={()=>props.history.push("/users/"+feed.user_id)} class="h-8 w-8 rounded-full cursor-pointer" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60"/>
                         <div class="ml-3 ">
                             <span class="text-sm font-semibold antialiased block leading-tight">{feed.user.first_name + " " + feed.user.last_name}</span>
                         </div>
@@ -298,7 +301,4 @@ const Publication = ({feed,users,fetchFeed}) => {
             </div>
         </>
     )
-}
-
-
-export default Publication
+})
