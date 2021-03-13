@@ -17,6 +17,9 @@ import Infos from './Pages/Utilisateur/Infos'
 import Result from './Pages/Feed/Result'
 import MyRecipes from './Pages/Recette/MyRecipes'
 
+import PrivateRoute from './SpecialRoutes/PrivateRoute'
+import AdminRoute from './SpecialRoutes/AdminRoute'
+
 const customHistory = createBrowserHistory()
 
 //Routing de l'application web
@@ -39,15 +42,14 @@ const Routing =()=> (
                 <Route component={Infos} path="/users/:id" exact />
 
                 {/*Route pour Mes publications*/}
-                {/*<Route component={MyFeed} path="/myFeed" exact />*/}
+                {/*<PrivateRoute component={MyFeed} path="/myFeed" exact />*/}
 
-
-                <Route component={MyRecipes} path="/myRecipes" exact />
+                <PrivateRoute component={MyRecipes} path="/myRecipes" exact />
 
                 {/*Route pour Support */}
-                {/*<Route component={Support} path="/support" exact />*/}
+                {/*<PrivateRoute component={Support} path="/support" exact />*/}
 
-                <Route component={Profil} path="/profil" exact />
+                <PrivateRoute component={Profil} path="/profil" exact />
 
                 <Route component={NotFound} path='*'/>
             </Switch>

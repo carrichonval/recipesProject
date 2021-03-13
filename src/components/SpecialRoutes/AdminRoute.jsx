@@ -1,5 +1,5 @@
 import React from 'react'
-import {isAdmin} from '../../functions/auth'
+import {isAdmin} from '../functions/auth'
 import {Route,Redirect} from 'react-router-dom'
 
 //Route necessitant d'etre admin
