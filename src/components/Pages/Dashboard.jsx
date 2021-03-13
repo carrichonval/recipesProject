@@ -1,5 +1,4 @@
 import React,{useState,useEffect} from 'react'
-import moment from 'moment'
 import {Spring} from 'react-spring/renderprops'
 import {isAuthenticated,getUserAuth} from '../functions/auth'
 

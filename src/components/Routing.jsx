@@ -36,10 +36,9 @@ const Routing =()=> (
                 <Route component={Result} path="/results/:id" exact />
 
                 <Route component={UserList} path="/users" exact />
-                <Route component={Profil} path="/users/:id" exact />
+                <Route component={Infos} path="/users/:id" exact />
 
                 <Route component={Profil} path="/profil" exact />
-                <Route component={Infos} path="/profil/infos/:id" exact />
 
                 <Route component={NotFound} path='*'/>
             </Switch>

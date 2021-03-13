@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import moment from 'moment'
-import {withRouter} from "react-router-dom";
+import {withRouter,Link} from "react-router-dom";
 import usePagination from "../../hooks/usePagination"
 import Pagination from "../../composants/Pagination"
 
@@ -77,7 +77,7 @@ export default withRouter((props)=>{
 
 
 const Item = ({user,props}) =>{
-
+    console.log("User : ",user)
     const [today,setToday] = useState( moment().format("YYYY-MM-DD"))
     function countdownDate(date){
         var a = moment(today, 'YYYY-MM-DD');
@@ -91,7 +91,13 @@ const Item = ({user,props}) =>{
 
     }
     return(
-        <li onClick={()=>props.history.push("/users/"+user.id)} class="cursor-pointer col-span-1 bg-white rounded-lg shadow">
+        <Link
+  to={{
+    pathname: "/users/"+user.id,
+    state: { user: user }
+  }}>
+
+        <li class="cursor-pointer col-span-1 bg-white rounded-lg shadow">
             <div class="w-full flex items-center justify-between p-6 space-x-6">
             <div class="flex-1 truncate">
                 <div class="flex items-center space-x-3">
@@ -116,5 +122,6 @@ const Item = ({user,props}) =>{
             </div>
             </div>
         </li>
+    </Link>
     )
 }
