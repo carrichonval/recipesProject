@@ -15,7 +15,7 @@ import Login from './Pages/Auth/Login'
 import Signup from './Pages/Auth/Signup'
 import Infos from './Pages/Utilisateur/Infos'
 import Result from './Pages/Feed/Result'
-
+import MyRecipes from './Pages/Recette/MyRecipes'
 
 const customHistory = createBrowserHistory()
 
@@ -41,8 +41,8 @@ const Routing =()=> (
                 {/*Route pour Mes publications*/}
                 {/*<Route component={MyFeed} path="/myFeed" exact />*/}
 
-                {/*Route pour Mes recettes*/}
-                {/*<Route component={MyRecipes} path="/myRecipes" exact />*/}
+
+                <Route component={MyRecipes} path="/myRecipes" exact />
 
                 {/*Route pour Support */}
                 {/*<Route component={Support} path="/support" exact />*/}

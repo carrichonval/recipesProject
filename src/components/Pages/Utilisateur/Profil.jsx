@@ -28,7 +28,14 @@ export default withRouter((props)=>{
                     </div>
                 </div>
                 
+                
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+
+                <Link
+                      to={{
+                        pathname: "/myRecipes",
+                        state: { user: user }
+                      }}>
                     <div class="bg-white overflow-hidden shadow rounded-lg col-span-1 cursor-pointer hover:shadow-lg">
                         <div class="px-4 py-6 ">
                             <div class="flex items-center">
@@ -45,7 +52,13 @@ export default withRouter((props)=>{
                             </div>
                         </div>
                     </div>
+                    </Link>
 
+                    <Link
+                      to={{
+                        pathname: "/myFeed",
+                        state: { user: user }
+                      }}>
                     <div class="bg-white overflow-hidden shadow rounded-lg col-span-1 cursor-pointer hover:shadow-lg">
                         <div class="px-4 py-6 ">
                             <div class="flex items-center">
@@ -62,6 +75,7 @@ export default withRouter((props)=>{
                             </div>
                         </div>
                     </div>
+                    </Link>
 
                     <Link
                       to={{

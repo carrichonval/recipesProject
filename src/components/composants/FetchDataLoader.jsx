@@ -10,7 +10,7 @@ export default function LoaderFetching ( {text} ){
             <div className="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-sm sm:w-full sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                 <div>
                     <div className="mx-auto flex items-center justify-center h-15 w-15 ">
-                        <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-15 w-15"></div>
+                        <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
                     </div>
                     <div className="mt-3 text-center sm:mt-5">
                         <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-headline">{text}</h3>
