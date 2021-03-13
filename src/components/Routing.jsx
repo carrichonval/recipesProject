@@ -16,6 +16,7 @@ import Signup from './Pages/Auth/Signup'
 import Infos from './Pages/Utilisateur/Infos'
 import Result from './Pages/Feed/Result'
 import MyRecipes from './Pages/Recette/MyRecipes'
+import MyFeed from './Pages/Feed/MyFeed'
 
 import PrivateRoute from './SpecialRoutes/PrivateRoute'
 import AdminRoute from './SpecialRoutes/AdminRoute'
@@ -41,8 +42,7 @@ const Routing =()=> (
                 <Route component={UserList} path="/users" exact />
                 <Route component={Infos} path="/users/:id" exact />
 
-                {/*Route pour Mes publications*/}
-                {/*<PrivateRoute component={MyFeed} path="/myFeed" exact />*/}
+                <PrivateRoute component={MyFeed} path="/myFeed" exact />
 
                 <PrivateRoute component={MyRecipes} path="/myRecipes" exact />
 

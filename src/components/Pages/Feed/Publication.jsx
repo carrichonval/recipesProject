@@ -9,7 +9,6 @@ import {withRouter,Link} from 'react-router-dom'
 
 export default withRouter((props)=>{
     const {feed,fetchFeed,users,location} = props
-    console.log(feed)
     const [findLike,setFindLike] = useState(false)
     const [showLikes,setShowLikes] = useState(false)
     const [hidden,setHidden] = useState(true)
