@@ -6,6 +6,7 @@ import usePagination from '../../hooks/usePagination';
 import ItemCard from './ItemCard'
 import FetchDataLoader from '../../composants/FetchDataLoader'
 import {useLocation} from 'react-router-dom'
+import { getUserAuth } from '../../functions/auth';
 
 export default function MyRecipes (props){
 
@@ -64,7 +65,7 @@ export default function MyRecipes (props){
     const { next, prev, jump, currentPage, maxPage,startIndex, endIndex , paginate} = usePagination(recipes ? recipes : [],8)
 
     useEffect(() => {
-        let recettes = location.state.user.recettes
+        let recettes = location.state ?  location.state.user.recettes : getUserAuth().recettes
         lodash.forEach(recettes,(recipe)=>{
             recipe.value = recipe.id
             recipe.label = recipe.type
