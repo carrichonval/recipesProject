@@ -1,5 +1,6 @@
 import React, { useState,useEffect} from 'react';
 import Publication from './Publication'
+import lodash from 'lodash'
 
 export default function Home (props){
 
@@ -25,8 +26,12 @@ export default function Home (props){
             return response.json();
         })
         .then((json) => {
-          console.log(json)
-          setFeed(json)
+            //Oragnise les commentaires par user_id
+            lodash.forEach(json,(feed)=>{
+                let orderResult = lodash.orderBy(feed.result_comments,['user_id'],['asc'])
+                feed.result_comments = orderResult
+            })
+            setFeed(json)
         })
         .catch((error) => {
             console.log(error)
@@ -47,16 +52,12 @@ export default function Home (props){
             return response.json();
         })
         .then((json) => {
-          console.log(json)
           setUsers(json)
         })
         .catch((error) => {
             
         });
     }
-
-
-    console.log(users)
     
     return (
         <>

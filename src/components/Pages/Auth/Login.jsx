@@ -49,7 +49,7 @@ export default function Login (props){
             return response.json();
         })
         .then((json) => {
-            console.log(json)
+            console.log("json",json)
             if(json.access_token){
                 localStorage.setItem('token',json.access_token)
                 //Redirige vers la page d'accueil
