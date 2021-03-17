@@ -79,7 +79,7 @@ export default function Login (props){
                     </div>
                     <div className="rounded-md shadow-sm">
                         <div>
-                            <input autoComplete="off" onChange={(e)=>setUser({...user,login:e.target.value})} value={user.login} name="email" type="text" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Email"/>
+                            <input autoComplete="off" onChange={(e)=>setUser({...user,login:e.target.value})} value={user.login} name="login" type="text" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Login"/>
                         </div>
                         <div className="-mt-px">
                             <div>

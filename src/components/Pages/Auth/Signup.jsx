@@ -277,19 +277,19 @@ return (
 
                 <div>
                     <label htmlFor="first_name" className="m block text-sm font-medium leading-5 text-gray-700">
-                        First name
+                        Prénom
                     </label>
                     <div className="my-1 rounded-md shadow-sm">
-                        <input placeholder="Nom d'utilisateur" autoComplete="off" onChange={(e)=>setUser({...user,first_name:e.target.value})} id="first_name" type="text" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 outline-none transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                        <input placeholder="Prénom " autoComplete="off" onChange={(e)=>setUser({...user,first_name:e.target.value})} id="first_name" type="text" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 outline-none transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                     </div>
                 </div>
 
                 <div>
                     <label htmlFor="last_name" className="block text-sm font-medium leading-5 text-gray-700">
-                        Last name
+                        Nom
                     </label>
                     <div className="my-1 rounded-md shadow-sm">
-                        <input placeholder="Nom d'utilisateur" autoComplete="off" onChange={(e)=>setUser({...user,last_name:e.target.value})} id="last_name" type="text" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 outline-none transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                        <input placeholder="Nom " autoComplete="off" onChange={(e)=>setUser({...user,last_name:e.target.value})} id="last_name" type="text" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 outline-none transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                     </div>
                 </div>
 
@@ -307,7 +307,7 @@ return (
                         Adresse mail
                     </label>
                     <div className="my-1 rounded-md shadow-sm">
-                        <input placeholder="Adresse email" autoComplete="off" onChange={(e)=>setUser({...user,email:e.target.value})} id="email" type="email" className={(isValidEmail(user.email) ? " border-green-300  " : " border-red-500 ") + " outline-none appearance-none block w-full px-3 py-2 border rounded-md placeholder-gray-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5"} />
+                        <input placeholder="Adresse mail" autoComplete="off" onChange={(e)=>setUser({...user,email:e.target.value})} id="email" type="email" className={(isValidEmail(user.email) ? " border-green-300  " : " border-red-500 ") + " outline-none appearance-none block w-full px-3 py-2 border rounded-md placeholder-gray-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5"} />
                     </div>
                 </div>
 
