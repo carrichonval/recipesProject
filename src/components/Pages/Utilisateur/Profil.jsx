@@ -6,10 +6,6 @@ import {withRouter,Link} from "react-router-dom";
 export default withRouter((props)=>{
 
     const [user,setUser] = useState(getUserAuth())
-    const [showInfosPersos,setShowInfosPersos] = useState(false)
-
-
-    console.log(user)
 
     return (
         <>
@@ -128,83 +124,3 @@ export default withRouter((props)=>{
         </>
     )
 })
-
-const ModalInfos = ({setShowInfosPersos,user}) =>{
-    return(
-<div class="fixed z-10 inset-0 overflow-y-auto">
-  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-
-    <div class="fixed inset-0 transition-opacity">
-      <div onClick={()=>setShowInfosPersos(false)} class="absolute inset-0 bg-gray-500 opacity-75"></div>
-    </div>
-
-    <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
-
-    <div class="w-2/3 inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:p-6">
-      
-
-<div class="bg-white shadow overflow-hidden sm:rounded-lg">
-  <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-    <h3 class="text-lg leading-6 font-medium text-gray-900">
-      Mes informations personnelles
-    </h3>
-  </div>
-  <div class="px-4 py-5 sm:p-0">
-    <dl>
-      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-        <dt class="text-sm leading-5 font-medium text-gray-500">
-          Prénom
-        </dt>
-        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-          {user.first_name}
-        </dd>
-      </div>
-      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-        <dt class="text-sm leading-5 font-medium text-gray-500">
-         Nom
-        </dt>
-        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-          {user.last_name}
-        </dd>
-      </div>
-      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-        <dt class="text-sm leading-5 font-medium text-gray-500">
-          Login
-        </dt>
-        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-          {user.login}
-        </dd>
-      </div>
-      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-        <dt class="text-sm leading-5 font-medium text-gray-500">
-          Description
-        </dt>
-        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-          {user.description}
-        </dd>
-      </div>
-      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-        <dt class="text-sm leading-5 font-medium text-gray-500">
-          Adresse email
-        </dt>
-        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-          {user.email}
-        </dd>
-      </div>
-    </dl>
-  </div>
-</div>
-<div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-    <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-        <button onClick={()=>setShowInfosPersos(false)} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-            Fermer
-        </button>
-    </span>
-</div>
-    </div>
-
-  </div>
-</div>
-
-    )
-}
