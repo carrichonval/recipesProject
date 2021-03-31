@@ -10,6 +10,7 @@ export const Infos = (props) =>{
     const params = useParams()
     const location = useLocation()
     const [user,setUser] = useState(null)
+    const [note,setNote] = useState(null)
 
 
     // Recupere l'object si on provient d'un lien, sinon on appel l'api pour récuperer l'utilisateur
@@ -18,6 +19,7 @@ export const Infos = (props) =>{
             fetchUser()
         }else{
             setUser(location.state.user)
+            getMoyenne(location.state.user)
         }
     }, []);
 
@@ -35,30 +37,43 @@ export const Infos = (props) =>{
             return response.json();
         })
         .then((json) => {
-          console.log(json)
           setUser(json)
+          getMoyenne(json)
         })
         .catch((error) => {
-            
+            console.log(error)
         });
     }
 
-    const getMoyenne = () => {
-        let total = 0
-        if(user.recettes.length == 0){
-            return "Pas encore noté"
-        }
-        lodash.forEach(user.recettes,(recette)=>{
-            total += recette.note
+    //A REFAIRE
+    const getMoyenne = (user) => {
+        fetch(process.env.REACT_APP_API_URL+'/getMoyenne/'+user.id, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
         })
-        return (total/user.recettes.length) + "/5"
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((json) => {
+            console.log(json)
+            setNote(json.note)
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+
     }
 
     const convertDate = (date) =>{
         return moment(date).format('DD/MM/YYYY')
     }
 
-    console.log(user)
+console.log("USER",user)
 
     if(user == null){
         return <FetchDataLoader text="Récupérations des informations"></FetchDataLoader>
@@ -119,7 +134,7 @@ export const Infos = (props) =>{
                                     Note moyenne
                                     </dt>
                                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {getMoyenne(user)}
+                                        {note}
                                     </dd>
                                 </div>
                             </dl>
