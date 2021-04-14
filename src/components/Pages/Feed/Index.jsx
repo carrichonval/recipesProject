@@ -1,7 +1,7 @@
 import React, { useState,useEffect} from 'react';
 import Publication from './Publication'
 import lodash from 'lodash'
-import {getUserAuth,} from '../../functions/auth'
+import {getUserAuth,isAuthenticated} from '../../functions/auth'
 
 export default function Home (props){
 
@@ -91,13 +91,14 @@ export default function Home (props){
     
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col">
+            {isAuthenticated() ? <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col">
                 <ul class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-4 xl:grid-cols-4">
                     <div onClick={()=>setShowModal(true)} className="bg-white justify-center shadow-sm border rounded-md p-2 cursor-pointer hover:bg-gray-100">
                         Poster un résultat
                     </div>
                 </ul>
             </div>
+            :null}
 
             {showModal ?
 
