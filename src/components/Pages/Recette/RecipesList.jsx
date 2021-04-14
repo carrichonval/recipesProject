@@ -51,11 +51,7 @@ export default function RecipesList (props){
         {
             value:"1",
             label:"Les plus réalisés"
-        },
-        {
-            value:"2",
-            label:"Les mieux notés"
-        },
+        }
     ]
 
     //Pagination que si l'on a + de 8 recettes
@@ -93,6 +89,7 @@ export default function RecipesList (props){
     }
 
     const trierPar = (e) => {
+        
         switch (e.value) {
             case "0":
                 let test = lodash.orderBy(recipes,["name"],["asc"])
@@ -102,14 +99,13 @@ export default function RecipesList (props){
                 let test2 = lodash.orderBy(recipes,["achieve"],["desc"])
                 setRecipes(test2)
                 break;
-            case "2":
-                let test3 = lodash.orderBy(recipes,["note"],["desc"])
-                setRecipes(test3)
-                break;
             default:
+                
                 break;
         }
+        
     }
+
 
     if(recipes.length == 0){
         return  <FetchDataLoader text="Récupération des données" />
@@ -149,7 +145,6 @@ export default function RecipesList (props){
                             onChange = {(e)=>trierPar(e)}
                             placeholder="Trier par"
                             className="w-full"
-                            isClearable
                             isSearchable
                         />
                     </div>

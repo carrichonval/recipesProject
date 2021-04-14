@@ -45,7 +45,7 @@ export const Infos = (props) =>{
         });
     }
 
-    //A REFAIRE
+    
     const getMoyenne = (user) => {
         fetch(process.env.REACT_APP_API_URL+'/getMoyenne/'+user.id, {
             method: 'GET',
@@ -60,7 +60,6 @@ export const Infos = (props) =>{
             return response.json();
         })
         .then((json) => {
-            console.log(json)
             setNote(json.note)
         })
         .catch((error) => {
@@ -73,7 +72,6 @@ export const Infos = (props) =>{
         return moment(date).format('DD/MM/YYYY')
     }
 
-console.log("USER",user)
 
     if(user == null){
         return <FetchDataLoader text="Récupérations des informations"></FetchDataLoader>
