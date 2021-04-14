@@ -23,7 +23,8 @@ const ItemCard = ({recipe})=>{
     }
 
     const getNote = (notes) => {
-        if(notes.length > 0 ){
+        
+        if(notes && notes.length > 0 ){
             let total = 0
             lodash.forEach(notes,(n)=>{
                 total += n.note

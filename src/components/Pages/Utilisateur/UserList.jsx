@@ -54,7 +54,7 @@ export default withRouter((props)=>{
                     </div>
                 </div>
 
-                    <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
                     {users.slice(startIndex, endIndex).map((user)=>{
                         if((user.first_name+user.last_name).toLowerCase().search(searchName.toLowerCase()) === -1){
@@ -65,9 +65,9 @@ export default withRouter((props)=>{
                         )
                     })}
                     
-                    </ul>
+                </ul>
 
-                    <Pagination currentPage={currentPage} next={next} prev={prev} jump={jump} paginate={paginate} maxPage={maxPage} />
+                <Pagination currentPage={currentPage} next={next} prev={prev} jump={jump} paginate={paginate} maxPage={maxPage} />
                 
             </div>
         </> 
