@@ -17,6 +17,7 @@ import Infos from './Pages/Utilisateur/Infos'
 import Result from './Pages/Feed/Result'
 import MyRecipes from './Pages/Recette/MyRecipes'
 import MyFeed from './Pages/Feed/MyFeed'
+import Creation from './Pages/Recette/Creation'
 
 import PrivateRoute from './SpecialRoutes/PrivateRoute'
 import AdminRoute from './SpecialRoutes/AdminRoute'
@@ -36,6 +37,7 @@ const Routing =()=> (
                 <Route component={Dashboard} path="/dashboard" exact />
                 <Route component={RecipesList} path="/recipes" exact />
                 <Route component={Cook} path="/cook" exact />
+                <Route component={Creation} path="/addRecipe" exact />
 
                 <Route component={Result} path="/results/:id" exact />
 

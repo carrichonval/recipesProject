@@ -5,6 +5,7 @@ import Pagination from '../../composants/Pagination';
 import usePagination from '../../hooks/usePagination';
 import ItemCard from './ItemCard'
 import FetchDataLoader from '../../composants/FetchDataLoader'
+import {getUserAuth,isAuthenticated} from '../../functions/auth'
 
 export default function RecipesList (props){
 
@@ -110,10 +111,18 @@ export default function RecipesList (props){
     if(recipes.length == 0){
         return  <FetchDataLoader text="Récupération des données" />
     }
+    console.log(props)
     
     return (
         <>
-        
+        {isAuthenticated() ? <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col">
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-4 xl:grid-cols-4">
+                    <div onClick={()=>props.history.push("/addRecipe")} className="bg-white justify-center shadow-sm border rounded-md p-2 cursor-pointer hover:bg-gray-100">
+                        Ajouter une recette
+                    </div>
+                </ul>
+            </div>
+            :null}
             <div className={" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col"}>
                 <div className="flex flex-col lg:flex-row w-full">
                     <div className="flex flex-row items-center justify-center mb-3 w-full lg:w-1/3">

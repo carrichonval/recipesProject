@@ -5,18 +5,22 @@ const ItemCard = ({recipe})=>{
 
     const gestionType = (type)=>{
         switch (type) {
-            case "dessert":
+            case "Dessert":
                 return (
                     <span class="px-2 py-1 text-teal-800 text-xs leading-4 font-medium bg-teal-200 rounded-full">{type}</span>
                 )
-            case "entree":
+            case "Entrée":
                 return(
                     <span class="px-2 py-1 text-teal-800 text-xs leading-4 font-medium bg-green-200 rounded-full">{type}</span>
                 )
-            case "plat":
+            case "Plat":
                 return(
                     <span class="px-2 py-1 text-teal-800 text-xs leading-4 font-medium bg-blue-200 rounded-full">{type}</span>
                 )
+            case "Gateaux":
+                    return(
+                        <span class="px-2 py-1 text-teal-800 text-xs leading-4 font-medium bg-red-200 rounded-full">{type}</span>
+                    )
             default:
                 break;
         }
@@ -63,7 +67,7 @@ const ItemCard = ({recipe})=>{
                     <div class="-ml-px w-0 flex-1 flex">
                         <a class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg transition ease-in-out duration-150">
                             <svg class="h-5 w-5 text-gray-500" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <polyline points="9 11 12 14 20 6" />  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
-                            <span class="ml-3">{recipe.achieve <= 1 ? recipe.achieve + "achieve" : recipe.achieve + " achieves"} </span>
+                            <span class="ml-3">{recipe.achieve <= 1 ? recipe.achieve + " achieve" : recipe.achieve + " achieves"} </span>
                         </a>
                     </div>
                 </div>
