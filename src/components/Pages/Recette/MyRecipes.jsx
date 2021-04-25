@@ -65,12 +65,7 @@ export default function MyRecipes (props){
     const { next, prev, jump, currentPage, maxPage,startIndex, endIndex , paginate} = usePagination(recipes ? recipes : [],8)
 
     useEffect(() => {
-        let recettes = location.state ?  location.state.user.recettes : getUserAuth().recettes
-        lodash.forEach(recettes,(recipe)=>{
-            recipe.value = recipe.id
-            recipe.label = recipe.type
-        })
-        setRecipes(recettes)
+        fetchRecettes()
     }, []);
 
 
@@ -92,6 +87,35 @@ export default function MyRecipes (props){
                 break;
         }
     }
+
+    const fetchRecettes = async () => {
+        fetch(process.env.REACT_APP_API_URL+'/recettes/user/'+getUserAuth().id, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((json) => {
+            
+            lodash.forEach(json,(recipe)=>{
+                recipe.value = recipe.id
+                recipe.label = recipe.type
+            })
+            setRecipes(json)
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+
+    }
+
+    console.log(recipes)
 
     if(recipes == null){
         return  <FetchDataLoader text="Récupération des données" />
@@ -172,7 +196,7 @@ export default function MyRecipes (props){
                         }
 
                         return(
-                            <ItemCard recipe={recipe}/>
+                            <ItemCard recipe={recipe} deletable={true} fetchRecettes={fetchRecettes} />
                         )
                     })}
 

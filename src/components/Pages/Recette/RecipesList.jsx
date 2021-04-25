@@ -200,7 +200,7 @@ export default function RecipesList (props){
                         }
 
                         return(
-                            <ItemCard recipe={recipe}/>
+                            <ItemCard recipe={recipe} deletable={false} fetchRecettes={fetchRecipes} />
                         )
                     })}
 

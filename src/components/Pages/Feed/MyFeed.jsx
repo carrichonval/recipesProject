@@ -91,7 +91,7 @@ export default function Myfeed (props){
                 <ul class="grid grid-cols-1 gap-6  lg:grid-cols-3 xl:grid-cols-3">
                     {feed.map((f)=>{
                         return(
-                            <Publication feed={f} users={users} fetchFeed={fetchFeed}/>
+                            <Publication feed={f} users={users} fetchFeed={fetchFeed} deletable={true}/>
                         )
                     })}
                 </ul>

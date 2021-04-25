@@ -124,7 +124,6 @@ export default function Creation (props){
     }
     
 
-    console.log("Recipe",recipe)
     if(recipe == null){
         return <FetchDataLoader text="Récupérations des informations"></FetchDataLoader>
     }else{

@@ -1,8 +1,9 @@
 import React from 'react'
 import lodash from 'lodash'
 import {Link} from 'react-router-dom'
+import {getUserAuth} from '../../functions/auth'
 
-const ItemCard = ({recipe})=>{
+const ItemCard = ({recipe,deletable,fetchRecettes})=>{
 
     const gestionType = (type)=>{
         switch (type) {
@@ -28,6 +29,7 @@ const ItemCard = ({recipe})=>{
     }
 
     const getNote = (notes) => {
+        console.log(notes)
         
         if(notes && notes.length > 0 ){
             let total = 0
@@ -38,6 +40,32 @@ const ItemCard = ({recipe})=>{
         }else{
             return "Pas encore noté"
         }  
+    }
+
+    const deleteRecette = async () => {
+        fetch(process.env.REACT_APP_API_URL+'/recettes', {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                recette_id: recipe.id,
+                user_id: getUserAuth().id,
+            })
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((json) => {
+            console.log(json)
+            fetchRecettes()
+        })
+        .catch((error) => {
+            console.log(error)
+        });
     }
 
     
@@ -79,6 +107,22 @@ const ItemCard = ({recipe})=>{
                     </div>
                 </div>
             </div>
+            {deletable ?
+                <div class="border-t border-gray-200">
+                    <div class="-mt-px flex">
+                        <button onClick={()=>deleteRecette()} className="w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-b-md text-white bg-primary hover:bg-fourth focus:outline-none focus:border-red-800 focus:shadow-outline-red active:bg-red-800 transition duration-150 ease-in-out">
+                            <svg class="h-4 w-4 text-white"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z"/>
+                                <line x1="4" y1="7" x2="20" y2="7" />
+                                <line x1="10" y1="11" x2="10" y2="17" />  
+                                <line x1="14" y1="11" x2="14" y2="17" /> 
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />  
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            :null}
         </li>
     )
 }

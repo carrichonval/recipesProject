@@ -116,7 +116,7 @@ export default function Creation (props){
         setRecipe({...recipe,etapes:updateEtapes})
     }
 
-    const enregistrerRecette = async (panier) => {
+    const enregistrerRecette = async () => {
         let recette = await fetchRecetteID();
         let recette_id = recette.id
 

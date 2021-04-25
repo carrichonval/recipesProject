@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react'
-import lodash from 'lodash'
+import lodash, { divide } from 'lodash'
 import ModalInfosLikes from './ModalInfosLikes'
 import {getUserAuth,isAuthenticated} from '../../functions/auth'
 import {withRouter,Link} from 'react-router-dom'
@@ -8,7 +8,7 @@ import {withRouter,Link} from 'react-router-dom'
 // red #B4403C
 
 export default withRouter((props)=>{
-    const {feed,fetchFeed,users,location} = props
+    const {feed,fetchFeed,users,location,deletable} = props
     const [findLike,setFindLike] = useState(false)
     const [showLikes,setShowLikes] = useState(false)
     const [hidden,setHidden] = useState(true)
@@ -51,7 +51,6 @@ export default withRouter((props)=>{
     //Vérifie si l'utilisateur à déjà laisser un commentaire sur la plublication
     const checkAddComment = () =>{
         let find = lodash.find(feed.result_comments,(result)=>{
-            console.log(result)
             if(result.user_id == userAuth.id){
                 return true
             }
@@ -67,7 +66,6 @@ export default withRouter((props)=>{
     }
 
     const addComment = () => {
-        console.log(comment)
         //Cacher la zone d'ajout
         setHiddenComment(true)
 
@@ -167,17 +165,62 @@ export default withRouter((props)=>{
         
     }
 
-    console.log(feed)
+    const deleteResult = async () => {
+        fetch(process.env.REACT_APP_API_URL+'/results', {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                result_id: feed.id,
+                user_id: getUserAuth().id,
+            })
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((json) => {
+            console.log(json)
+            fetchFeed()
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+    }
+
+    console.log("Feed",feed)
     return(
         <>
             {showLikes ? <ModalInfosLikes setShowLikes={setShowLikes} likes={feed.result_likes} users={users} /> : null}
             <div class="bg-gray-100 lg:col-start-2 justify-center flex">
                 <div class="bg-white border rounded-md max-w-md w-full">
-                    <div class="  flex items-center px-4 py-3">
+                    <div class="grid grid-cols-8 px-4 py-3 items-center">
+                        
                         <img onClick={()=>props.history.push("/users/"+feed.user_id)} class="h-8 w-8 rounded-full cursor-pointer" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60"/>
-                        <div class="ml-3 ">
-                            <span class="text-sm font-semibold antialiased block leading-tight">{feed.user.first_name + " " + feed.user.last_name}</span>
+                        
+                        <div className="col-span-6">
+                            <div class="ml-3 ">
+                                <span class="text-sm font-semibold antialiased block leading-tight">{feed.user.first_name + " " + feed.user.last_name}</span>
+                            </div>
                         </div>
+
+                        {deletable ? 
+                            <div className="col-start-8">
+                                <button onClick={()=>deleteResult()} className="w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-primary hover:bg-fourth focus:outline-none focus:border-red-800 focus:shadow-outline-red active:bg-red-800 transition duration-150 ease-in-out">
+                                    <svg class="h-4 w-4 text-white"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z"/>
+                                        <line x1="4" y1="7" x2="20" y2="7" />
+                                        <line x1="10" y1="11" x2="10" y2="17" />  
+                                        <line x1="14" y1="11" x2="14" y2="17" /> 
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />  
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                    </svg>
+                                </button>
+                            </div>
+                        :null}
                     </div>
                     <div className="flex justify-center">
                         <img  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60"/>
@@ -268,7 +311,6 @@ export default withRouter((props)=>{
                         <div class="font-semibold text-sm mx-4 mt-2 mb-4 flex flex-col">
                             <div className="flex flex-row border-b border-gray-500 ">Commentaires</div>
                                 {feed.result_comments.map((r,i)=>{
-                                    console.log(i)
                                     //Si il y a plus de 2 commentaires, on cache, sinon on affiche tout simplement
                                    if(i > 2){
                                        return (
