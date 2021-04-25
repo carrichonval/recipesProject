@@ -97,28 +97,33 @@ export default withRouter((props)=>{
                         </div>
                     </div>
                     </Link>
-                    <div class="bg-white overflow-hidden shadow rounded-lg col-span-1 cursor-pointer hover:shadow-lg">
-                        <div class="px-4 py-6 ">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 bg-fourth rounded-md p-6">
-                                    <svg class="h-8 lg:h-10 w-8 lg:w-10 text-white"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <circle cx="12" cy="12" r="4" />
-                                        <line x1="4.93" y1="4.93" x2="9.17" y2="9.17" />
-                                        <line x1="14.83" y1="14.83" x2="19.07" y2="19.07" />
-                                        <line x1="14.83" y1="9.17" x2="19.07" y2="4.93" />
-                                        <line x1="14.83" y1="9.17" x2="18.36" y2="5.64" />
-                                        <line x1="4.93" y1="19.07" x2="9.17" y2="14.83" />
-                                    </svg>
-                                </div>
-                                <div class="w-full text-center p-2">
-                                    <dl className="flex justify-center font-semibold text-sm">
-                                        Support
-                                    </dl>
+                    <Link
+                      to={{
+                        pathname: "/support"
+                      }}>
+                        <div class="bg-white overflow-hidden shadow rounded-lg col-span-1 cursor-pointer hover:shadow-lg">
+                            <div class="px-4 py-6 ">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-fourth rounded-md p-6">
+                                        <svg class="h-8 lg:h-10 w-8 lg:w-10 text-white"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <circle cx="12" cy="12" r="4" />
+                                            <line x1="4.93" y1="4.93" x2="9.17" y2="9.17" />
+                                            <line x1="14.83" y1="14.83" x2="19.07" y2="19.07" />
+                                            <line x1="14.83" y1="9.17" x2="19.07" y2="4.93" />
+                                            <line x1="14.83" y1="9.17" x2="18.36" y2="5.64" />
+                                            <line x1="4.93" y1="19.07" x2="9.17" y2="14.83" />
+                                        </svg>
+                                    </div>
+                                    <div class="w-full text-center p-2">
+                                        <dl className="flex justify-center font-semibold text-sm">
+                                            Support
+                                        </dl>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
             </div>
         </>

@@ -20,6 +20,7 @@ import MyFeed from './Pages/Feed/MyFeed'
 import Creation from './Pages/Recette/Creation'
 import Visualisation from './Pages/Recette/Visualisation'
 import Edition from './Pages/Recette/Edition'
+import Support from './Pages/Support'
 
 import PrivateRoute from './SpecialRoutes/PrivateRoute'
 import AdminRoute from './SpecialRoutes/AdminRoute'
@@ -37,9 +38,10 @@ const Routing =()=> (
                 <Route path="/signup" render={(props) => (<Signup {...props} />)} />
 
                 <Route component={Dashboard} path="/dashboard" exact />
-                <Route component={RecipesList} path="/recipes" exact />
                 <Route component={Cook} path="/cook" exact />
                 <Route component={Creation} path="/addRecipe" exact />
+
+                <Route component={RecipesList} path="/recipes" exact />
                 <Route component={Visualisation} path="/recipes/:id" exact />
                 <Route component={Edition} path="/recipes/edit/:id" exact />
 
@@ -49,7 +51,7 @@ const Routing =()=> (
                 <Route component={Infos} path="/users/:id" exact />
 
                 <PrivateRoute component={MyFeed} path="/myFeed" exact />
-
+                <PrivateRoute component={Support} path="/support" exact />
                 <PrivateRoute component={MyRecipes} path="/myRecipes" exact />
 
                 {/*Route pour Support */}
