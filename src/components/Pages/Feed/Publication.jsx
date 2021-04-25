@@ -51,6 +51,7 @@ export default withRouter((props)=>{
     //Vérifie si l'utilisateur à déjà laisser un commentaire sur la plublication
     const checkAddComment = () =>{
         let find = lodash.find(feed.result_comments,(result)=>{
+            console.log(result)
             if(result.user_id == userAuth.id){
                 return true
             }
@@ -166,6 +167,7 @@ export default withRouter((props)=>{
         
     }
 
+    console.log(feed)
     return(
         <>
             {showLikes ? <ModalInfosLikes setShowLikes={setShowLikes} likes={feed.result_likes} users={users} /> : null}
@@ -266,6 +268,7 @@ export default withRouter((props)=>{
                         <div class="font-semibold text-sm mx-4 mt-2 mb-4 flex flex-col">
                             <div className="flex flex-row border-b border-gray-500 ">Commentaires</div>
                                 {feed.result_comments.map((r,i)=>{
+                                    console.log(i)
                                     //Si il y a plus de 2 commentaires, on cache, sinon on affiche tout simplement
                                    if(i > 2){
                                        return (
@@ -276,14 +279,20 @@ export default withRouter((props)=>{
                                        )
                                    }else if(i == 2){
                                         return(
-                                            <div className="grid my-2 grid-cols-3">
-                                                <div onClick={()=>setHidden(!hidden)} className="font-normal col-span-2 cursor-pointer">
-                                                    {hidden ?
-                                                    "Voir les autres commentaires .." :
-                                                    "Masquer les autres commentaires .. "
-                                                    }
+                                            <>
+                                                <div className="grid my-2 grid-cols-3">
+                                                    <div onClick={()=>setHidden(!hidden)} className="font-normal col-span-2 cursor-pointer">
+                                                        {hidden ?
+                                                        "Voir les autres commentaires .." :
+                                                        "Masquer les autres commentaires .. "
+                                                        }
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div className={(hidden ? "hidden " : "") + " grid grid-cols-3 ml-2"}>
+                                                    <div className="font-medium mr-2">{findUser(r.user_id)}</div>
+                                                    <div className="col-span-2 font-normal">{r.comment}</div>
+                                                </div>
+                                         </>
                                         )
                                    }else{
                                     return(

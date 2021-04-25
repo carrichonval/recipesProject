@@ -224,7 +224,7 @@ export default function Creation (props){
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="my-3">
-                        <input onChange={(e)=>setRecipe({...recipe,name:e.target.value}) } className="pb-1 w-full bg-white focus:outline-none focus:shadow-outline border border-gray-500 rounded-lg py-2 px-4 block appearance-none leading-normal" type="text" placeholder="Nom de la recette"/>
+                        <input value={recipe.name} onChange={(e)=>setRecipe({...recipe,name:e.target.value}) } className="pb-1 w-full bg-white focus:outline-none focus:shadow-outline border border-gray-500 rounded-lg py-2 px-4 block appearance-none leading-normal" type="text" placeholder="Nom de la recette"/>
                     </div>
                     <div className="my-3">
                         <Select
@@ -234,10 +234,11 @@ export default function Creation (props){
                             className="w-full"
                             isClearable
                             isSearchable
+                            value={recipe.type}
                         />
                     </div>
                     <div className="my-3">
-                        <input onChange={(e)=>setRecipe({...recipe,comment:e.target.value}) } className="pb-1 w-full bg-white focus:outline-none border border-gray-500 rounded-lg py-2 px-4 block appearance-none leading-normal" type="text" placeholder="Commentaire"/>
+                        <input value={recipe.comment} onChange={(e)=>setRecipe({...recipe,comment:e.target.value}) } className="pb-1 w-full bg-white focus:outline-none border border-gray-500 rounded-lg py-2 px-4 block appearance-none leading-normal" type="text" placeholder="Commentaire"/>
                     </div>
                 </div>
                 

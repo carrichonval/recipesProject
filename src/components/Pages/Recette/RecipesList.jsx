@@ -43,6 +43,25 @@ export default function RecipesList (props){
             label:"5"
         },
     ]
+    const typeRecipes = [
+        {
+            value:"0",
+            label:"Entrée"
+        },
+        {
+            value:"1",
+            label:"Plat"
+        },
+        {
+            value:"2",
+            label:"Dessert"
+        }
+        ,
+        {
+            value:"3",
+            label:"Gateaux"
+        }
+    ]
 
     const optionsTrie = [
         {
@@ -79,6 +98,10 @@ export default function RecipesList (props){
         .then((json) => {
             console.log(json)
             lodash.forEach(json,(recipe)=>{
+                let type = lodash.find(typeRecipes,(type)=>{
+                    return type.label == recipe.type
+                })
+                recipe.type = type
                 recipe.value = recipe.id
                 recipe.label = recipe.type
             })

@@ -1,5 +1,6 @@
 import React from 'react'
 import lodash from 'lodash'
+import {Link} from 'react-router-dom'
 
 const ItemCard = ({recipe})=>{
 
@@ -42,18 +43,24 @@ const ItemCard = ({recipe})=>{
     
     return(
         <li class="col-span-1 flex flex-col text-center bg-white rounded-lg shadow">
-            <div class="flex-1 flex flex-col p-8">
-                <img class="w-32 h-32 flex-shrink-0 mx-auto bg-black rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="" />
-                <h3 class="mt-6 text-gray-900 text-sm leading-5 font-medium">{recipe.name}</h3>
-                <dl class="mt-1 flex-grow flex flex-col justify-between">
-                    <dt class="sr-only">Title</dt>
-                    <dd class="text-gray-500 text-sm leading-5">{recipe.comment}</dd>
-                    <dt class="sr-only">Role</dt>
-                    <dd class="mt-3">
-                        {gestionType(recipe.type)}
-                    </dd>
-                </dl>
-            </div>
+            <Link
+                to={{
+                    pathname: "/recipes/"+recipe.id,
+                    state: { recipe: recipe }
+                }}>
+                <div class="flex-1 flex flex-col p-8 cursor-pointer">
+                    <img class="w-32 h-32 flex-shrink-0 mx-auto bg-black rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="" />
+                    <h3 class="mt-6 text-gray-900 text-sm leading-5 font-medium">{recipe.name}</h3>
+                    <dl class="mt-1 flex-grow flex flex-col justify-between">
+                        <dt class="sr-only">Title</dt>
+                        <dd class="text-gray-500 text-sm leading-5">{recipe.comment}</dd>
+                        <dt class="sr-only">Role</dt>
+                        <dd class="mt-3">
+                            {gestionType(recipe.type)}
+                        </dd>
+                    </dl>
+                </div>
+            </Link>
             <div class="border-t border-gray-200">
                 <div class="-mt-px flex">
                     <div class="w-0 flex-1 flex border-r border-gray-200">
