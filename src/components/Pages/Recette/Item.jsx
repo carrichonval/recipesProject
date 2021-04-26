@@ -24,8 +24,8 @@ const Item = ({type,obj,onChangeIngredient,onChangeEtape,deleteIngredient,delete
         case "etape":
             return(
                 <div className="p-4 border-b border-gray-300 grid grid-cols-5 gap-4">
-                    <input onChange={(e)=>onChangeEtape(e.target.value,obj.id,'step')} value={obj.step} className="col-span-2 pb-1 w-full bg-white focus:outline-none border border-gray-400 rounded-lg pt-1 px-4 appearance-none" type="text" placeholder="Etape n°" />
-                    <input onChange={(e)=>onChangeEtape(e.target.value,obj.id,'details')} value={obj.details} className="col-span-2 pb-1 w-full bg-white focus:outline-none border border-gray-400 rounded-lg pt-1 px-4 appearance-none" type="text" placeholder="Détails"/>
+                    <input onChange={(e)=>onChangeEtape(e.target.value,obj.id,'step')} value={obj.step} className=" pb-1 w-full bg-white focus:outline-none border border-gray-400 rounded-lg pt-1 px-4 appearance-none" type="text" placeholder="Etape n°" />
+                    <input onChange={(e)=>onChangeEtape(e.target.value,obj.id,'details')} value={obj.details} className="col-span-3 pb-1 w-full bg-white focus:outline-none border border-gray-400 rounded-lg pt-1 px-4 appearance-none" type="text" placeholder="Détails"/>
                     <button onClick={()=>deleteEtape(obj.id)} className="w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-primary hover:bg-fourth focus:outline-none focus:border-red-800 focus:shadow-outline-red active:bg-red-800 transition duration-150 ease-in-out">
                         <svg class="h-6 w-6 text-white"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z"/>

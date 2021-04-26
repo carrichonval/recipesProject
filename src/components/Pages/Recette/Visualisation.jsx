@@ -259,9 +259,9 @@ export default function Creation (props){
 
                                 {recipe.ingredients.map((ingredient)=>{
                                     return(
-                                        <div className="p-4 border-b border-gray-300 grid grid-cols-5 gap-4">
-                                            <input readOnly={true} value={ingredient.name} className="col-span-2 pb-1 w-full bg-white focus:outline-none border border-gray-400 rounded-lg pt-1 px-4 appearance-none" type="text" placeholder="Nom" />
-                                            <input readOnly={true} value={ingredient.quantity} className="col-span-2 pb-1 w-full bg-white focus:outline-none border border-gray-400 rounded-lg pt-1 px-4 appearance-none" type="text" placeholder="Quantité"/>
+                                        <div className="p-4 border-b border-gray-300 grid grid-cols-2 gap-4">
+                                            <input readOnly={true} value={ingredient.name} className=" pb-1 w-full bg-white focus:outline-none border border-gray-400 rounded-lg pt-1 px-4 appearance-none" type="text" placeholder="Nom" />
+                                            <input readOnly={true} value={ingredient.quantity} className=" pb-1 w-full bg-white focus:outline-none border border-gray-400 rounded-lg pt-1 px-4 appearance-none" type="text" placeholder="Quantité"/>
                                         </div> 
                                     )
                                 })}
@@ -281,8 +281,8 @@ export default function Creation (props){
                                 {recipe.etapes.map((etape)=>{
                                     return(
                                         <div className="p-4 border-b border-gray-300 grid grid-cols-5 gap-4">
-                                            <input readOnly={true} value={etape.step} className="col-span-2 pb-1 w-full bg-white focus:outline-none border border-gray-400 rounded-lg pt-1 px-4 appearance-none" type="text" placeholder="Nom" />
-                                            <input readOnly={true} value={etape.detail} className="col-span-2 pb-1 w-full bg-white focus:outline-none border border-gray-400 rounded-lg pt-1 px-4 appearance-none" type="text" placeholder="Quantité"/>
+                                            <input readOnly={true} value={etape.step} className=" pb-1 w-full bg-white focus:outline-none border border-gray-400 rounded-lg pt-1 px-4 appearance-none" type="text" placeholder="Nom" />
+                                            <input readOnly={true} value={etape.detail} className="col-span-4 pb-1 w-full bg-white focus:outline-none border border-gray-400 rounded-lg pt-1 px-4 appearance-none" type="text" placeholder="Quantité"/>
                                         </div> 
                                     )
                                 })}

@@ -6,6 +6,8 @@ import {getUserAuth} from '../../functions/auth'
 
 export default function Creation (props){
 
+    const [success,setSuccess] = useState(false)
+
 
     const typeRecipes = [
         {
@@ -127,7 +129,14 @@ export default function Creation (props){
         for await (const etape of recipe.etapes) {
             let addE = await fetchAddEtape(recette_id,etape)
         }
-       console.log("Enregistrement effectué")
+        setSuccess(true)
+        setTimeout(() => {
+            setSuccess(false)
+        }, 1500);
+        setTimeout(()=>{
+            props.history.push('/recipes')
+        },1500)
+       
     }
 
     const fetchRecetteID = () =>{
@@ -222,6 +231,24 @@ export default function Creation (props){
                 <div className="flex flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
                     Créer ta recette !
                 </div>
+                {success ?
+                    <div className="flex w-full">
+                        <div className="rounded-md bg-green-200 p-2 mt-2  w-full">
+                            <div className="flex">
+                                <div className="flex-shrink-0">
+                                    <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div className="ml-3">
+                                    <h3 className="text-sm leading-5 font-medium text-green-800">
+                                        Ta recette a bien été ajouté !
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                :null}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="my-3">
                         <input value={recipe.name} onChange={(e)=>setRecipe({...recipe,name:e.target.value}) } className="pb-1 w-full bg-white focus:outline-none focus:shadow-outline border border-gray-500 rounded-lg py-2 px-4 block appearance-none leading-normal" type="text" placeholder="Nom de la recette"/>

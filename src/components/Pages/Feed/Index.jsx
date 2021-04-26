@@ -93,9 +93,9 @@ export default function Home (props){
         <>
             {isAuthenticated() ? <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col">
                 <ul class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-4 xl:grid-cols-4">
-                    <div onClick={()=>setShowModal(true)} className="bg-white justify-center shadow-sm border rounded-md p-2 cursor-pointer hover:bg-gray-100">
+                    <button onClick={()=>setShowModal(true)} className="w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-primary hover:bg-fourth focus:outline-none focus:border-red-800 focus:shadow-outline-red active:bg-red-800 transition duration-150 ease-in-out">
                         Poster un résultat
-                    </div>
+                    </button>
                 </ul>
             </div>
             :null}
