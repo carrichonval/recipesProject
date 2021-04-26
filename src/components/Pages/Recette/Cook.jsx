@@ -2,6 +2,8 @@ import React, { useState ,useEffect} from 'react';
 import {getUserAuth} from '../../functions/auth'
 import FetchDataLoader from '../../composants/FetchDataLoader'
 import lodash from 'lodash'
+import Lottie from 'react-lottie'
+import CookingAnim from '../../lotties/cooking.json'
 
 export default function Cook (props){
 
@@ -18,6 +20,21 @@ export default function Cook (props){
     const [recetteCook,setRecetteCook] = useState(null)
     const [recetteStep,setRecetteStep] = useState(0)
     const [user,setUser] = useState({})
+    const [h,setH] = useState(500)
+
+    useEffect(()=>{
+        if(window.innerWidth > 800){
+            setH(500)
+        }else{
+            setH(300)
+        }
+    },[])
+
+    const animation = {
+        loop: true,
+        autoplay: true,
+        animationData: CookingAnim,
+    };
 
     const typeRecipes = [
         {
@@ -47,6 +64,9 @@ export default function Cook (props){
     useEffect(()=>{
         if(step > maxStep){
             addOneAchieve()
+        }
+        if(step == 3){
+            document.body.className = "bg-white"
         }
     },[step])
 
@@ -283,17 +303,23 @@ export default function Cook (props){
                             <div className="mt-12 flex flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
                                 {recetteCook.etapes[recetteStep].detail}
                             </div>
-                                <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 lg:mt-12">
-                                    <button onClick={()=>{setStep(step+1);setRecetteStep(recetteStep+1)}} className=" lg:col-start-2 w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-primary hover:bg-fourth focus:outline-none focus:border-red-800 focus:shadow-outline-red active:bg-red-800 transition duration-150 ease-in-out">
-                                       {step != maxStep ? "Etape suivante" : "Terminé !"}
-                                    </button>
-                                </div>
-                            </>
+                            <Lottie
+                                options={animation}
+                                isClickToPauseDisabled={true}
+                                height={h}
+                                width={window.innerWidth-100}
+                            />
+                            <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 lg:mt-12">
+                                <button onClick={()=>{setStep(step+1);setRecetteStep(recetteStep+1)}} className=" lg:col-start-2 w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-primary hover:bg-fourth focus:outline-none focus:border-red-800 focus:shadow-outline-red active:bg-red-800 transition duration-150 ease-in-out">
+                                    {step != maxStep ? "Etape suivante" : "Terminé !"}
+                                </button>
+                            </div>
+                        </>
                     :null}
                     {step > maxStep ?
                         <>
                             <div className="flex flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
-                                Tu as bien cuisiner !
+                                Tu as bien cuisiné !
                             </div>
                                 <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 lg:mt-12">
                                     <button onClick={()=>{fetchUser();setStep(0);setMaxStep(99999);setRecetteCook(null);setRecetteStep(0)}} className=" lg:col-start-2 w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-primary hover:bg-fourth focus:outline-none focus:border-red-800 focus:shadow-outline-red active:bg-red-800 transition duration-150 ease-in-out">
