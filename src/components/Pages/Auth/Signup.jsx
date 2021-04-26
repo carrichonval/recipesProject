@@ -217,7 +217,7 @@ return (
             <Logo color="primary" />
         </div>
         <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-            Enregistre toi
+            Enregistre-toi
         </h2>
 
     </div>
@@ -295,19 +295,19 @@ return (
 
                 <div>
                     <label htmlFor="login" className="block text-sm font-medium leading-5 text-gray-700">
-                        Login
+                        Identifiant
                     </label>
                     <div className="my-1 rounded-md shadow-sm">
-                        <input placeholder="Login" autoComplete="off" onChange={(e)=>setUser({...user,login:e.target.value})} id="login" type="text" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 outline-none transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                        <input placeholder="Identifiant" autoComplete="off" onChange={(e)=>setUser({...user,login:e.target.value})} id="login" type="text" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 outline-none transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                     </div>
                 </div>
 
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium leading-5 text-gray-700">
-                        Adresse mail
+                        Adresse email
                     </label>
                     <div className="my-1 rounded-md shadow-sm">
-                        <input placeholder="Adresse mail" autoComplete="off" onChange={(e)=>setUser({...user,email:e.target.value})} id="email" type="email" className={(isValidEmail(user.email) ? " border-green-300  " : " border-red-500 ") + " outline-none appearance-none block w-full px-3 py-2 border rounded-md placeholder-gray-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5"} />
+                        <input placeholder="Adresse email" autoComplete="off" onChange={(e)=>setUser({...user,email:e.target.value})} id="email" type="email" className={(isValidEmail(user.email) ? " border-green-300  " : " border-red-500 ") + " outline-none appearance-none block w-full px-3 py-2 border rounded-md placeholder-gray-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5"} />
                     </div>
                 </div>
 
@@ -341,11 +341,11 @@ return (
 
                 <div>
                     <label htmlFor="password" className="block text-sm font-medium leading-5 text-gray-700">
-                        Confirmation mot de passe
+                        Confirmation du mot de passe
                     </label>
                     <div className="my-1 rounded-md shadow-sm">
                         <div class="relative ">
-                            <input autoComplete="off" onChange={(e)=>setUser({...user,confirmPassword:e.target.value})} aria-label="Password" name="password" type={passwordVisible ? "text" : "password"} required className={(isValidPassword(user.password,user.confirmPassword) ? "border-green-300 " : " border-red-500 ")+" appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 outline-none transition duration-150 ease-in-out sm:text-sm sm:leading-5"} placeholder="Confirmation mot de passe" />
+                            <input autoComplete="off" onChange={(e)=>setUser({...user,confirmPassword:e.target.value})} aria-label="Password" name="password" type={passwordVisible ? "text" : "password"} required className={(isValidPassword(user.password,user.confirmPassword) ? "border-green-300 " : " border-red-500 ")+" appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 outline-none transition duration-150 ease-in-out sm:text-sm sm:leading-5"} placeholder="Confirmation du mot de passe" />
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center ">
                                 <span onClick={() => setPasswordVisible(!passwordVisible)} class="cursor-pointer text-gray-500 sm:text-sm sm:leading-5" id="price-currency">
                                     <svg class="  h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">

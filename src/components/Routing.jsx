@@ -38,7 +38,7 @@ const Routing =()=> (
                 <Route path="/signup" render={(props) => (<Signup {...props} />)} />
 
                 <Route component={Dashboard} path="/dashboard" exact />
-                <Route component={Cook} path="/cook" exact />
+                <PrivateRoute component={Cook} path="/cook" exact />
                 <Route component={Creation} path="/addRecipe" exact />
 
                 <Route component={RecipesList} path="/recipes" exact />

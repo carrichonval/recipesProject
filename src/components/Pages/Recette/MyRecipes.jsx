@@ -46,6 +46,26 @@ export default function MyRecipes (props){
         },
     ]
 
+    const typeRecipes = [
+        {
+            value:"0",
+            label:"Entrée"
+        },
+        {
+            value:"1",
+            label:"Plat"
+        },
+        {
+            value:"2",
+            label:"Dessert"
+        }
+        ,
+        {
+            value:"3",
+            label:"Gateaux"
+        }
+    ]
+
     const optionsTrie = [
         {
             value:"0",
@@ -131,7 +151,7 @@ export default function MyRecipes (props){
                     </div>
                     <div className="flex flex-row mb-3 w-full lg:w-1/5 lg:ml-2">
                         <Select
-                            options={recipes}
+                            options={typeRecipes}
                             onChange = {(e)=>setSearchType(e)}
                             placeholder="Type de recette"
                             className="w-full"
@@ -185,7 +205,7 @@ export default function MyRecipes (props){
                             return null
                         }
                         if(searchType){
-                            if(recipe.type.toLowerCase().search(searchType.type) === -1 ){
+                            if(recipe.type.toLowerCase().search(searchType.label.toLowerCase()) === -1 ){
                                 return null
                             }
                         }

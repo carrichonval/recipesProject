@@ -229,7 +229,7 @@ export default function Creation (props){
         
             <div className={" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col"}>
                 <div className="flex flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
-                    Créer ta recette !
+                    Créé ta recette !
                 </div>
                 {success ?
                     <div className="flex w-full">

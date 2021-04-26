@@ -73,12 +73,12 @@ export default function Login (props){
                             <Logo color="primary" />
                         </div>
                         <h2 className="my-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-                            Connecte toi
+                            Connecte-toi
                         </h2>
                     </div>
                     <div className="rounded-md shadow-sm">
                         <div>
-                            <input autoComplete="off" onChange={(e)=>setUser({...user,login:e.target.value})} value={user.login} name="login" type="text" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Login"/>
+                            <input autoComplete="off" onChange={(e)=>setUser({...user,login:e.target.value})} value={user.login} name="login" type="text" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Identifiant"/>
                         </div>
                         <div className="-mt-px">
                             <div>
@@ -121,11 +121,11 @@ export default function Login (props){
                             </div>
                         </div>
 
-                        <div className="text-sm leading-5">
+                        {/*<div className="text-sm leading-5">
                             <div className="cursor-pointer font-medium text-secondary hover:text-fourth focus:outline-none focus:underline transition ease-in-out duration-150">
                                 Mot de passe oublié ?
                             </div>
-                        </div>
+                        </div>*/}
                     </div>
 
                     

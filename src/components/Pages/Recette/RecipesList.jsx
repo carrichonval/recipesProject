@@ -101,7 +101,7 @@ export default function RecipesList (props){
                 let type = lodash.find(typeRecipes,(type)=>{
                     return type.label == recipe.type
                 })
-                recipe.type = type
+                //recipe.type = type
                 recipe.value = recipe.id
                 recipe.label = recipe.type
             })
@@ -134,7 +134,7 @@ export default function RecipesList (props){
     if(recipes.length == 0){
         return  <FetchDataLoader text="Récupération des données" />
     }
-    console.log(props)
+    console.log("search",searchType)
     
     return (
         <>
@@ -153,7 +153,7 @@ export default function RecipesList (props){
                     </div>
                     <div className="flex flex-row mb-3 w-full lg:w-1/5 lg:ml-2">
                         <Select
-                            options={recipes}
+                            options={typeRecipes}
                             onChange = {(e)=>setSearchType(e)}
                             placeholder="Type de recette"
                             className="w-full"
@@ -185,11 +185,12 @@ export default function RecipesList (props){
                 <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
                     {recipes.slice(startIndex, endIndex).map((recipe)=>{
+                        console.log('r',recipe.type)
                         if(recipe.name.toLowerCase().search(searchName.toLowerCase()) === -1 ){
                             return null
                         }
                         if(searchType){
-                            if(recipe.type.toLowerCase().search(searchType.type) === -1 ){
+                            if(recipe.type.toLowerCase().search(searchType.label.toLowerCase()) === -1 ){
                                 return null
                             }
                         }

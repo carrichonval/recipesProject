@@ -59,6 +59,12 @@ export default function Cook (props){
     useEffect(()=>{
         fetchRecettes()
         fetchUser()
+
+        //Réinitialise le background en gris en quittant la page
+        return ()=>{
+            document.body.className = "bg-gray-100"
+        }
+
     },[])
 
     useEffect(()=>{
@@ -70,6 +76,7 @@ export default function Cook (props){
         }
     },[step])
 
+    //Ajoute 1 au nombre de recette réalisé par l'utilisateur
     const addOneAchieve = ()=>{
         fetch(process.env.REACT_APP_API_URL+'/users/achieve', {
             method: 'POST',
@@ -95,6 +102,7 @@ export default function Cook (props){
         });
     }
 
+    //Récupère les recettes
     const fetchRecettes = () => {
         fetch(process.env.REACT_APP_API_URL+'/recettes', {
             method: 'GET',
@@ -125,6 +133,7 @@ export default function Cook (props){
         });
     }
 
+    //Récupère l'user
     const fetchUser = () => {
         fetch(process.env.REACT_APP_API_URL+'/users/'+getUserAuth().id, {
             method: 'GET',
@@ -172,19 +181,19 @@ export default function Cook (props){
             <>
                 <div className={" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col"}>
                     {step == 0 ?
-                        <div className="flex flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
+                        <div className="flex text-center flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
                             C'est l'heure de cuisiner, choisis ta recette
                         </div>
                     : step == 1 ?
-                        <div className="flex flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
+                        <div className="flex text-center flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
                             Prépare tes ingrédients !
                         </div>
                     : step == 2 ?
-                        <div className="flex flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
-                            Dernier préparatif
+                        <div className="flex text-center flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
+                            Dernier préparatif ..
                         </div>
                     : (step >= 3 && step <= maxStep) ?
-                        <div className="flex flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
+                        <div className="flex text-center flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
                             Etape n°{step-2}
                         </div>
                     :null
@@ -292,7 +301,7 @@ export default function Cook (props){
                             </div>
                             <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 lg:mt-12">
                                 <button onClick={()=>setStep(3)} className=" lg:col-start-2 w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-primary hover:bg-fourth focus:outline-none focus:border-red-800 focus:shadow-outline-red active:bg-red-800 transition duration-150 ease-in-out">
-                                    C'est partie !
+                                    C'est parti !
                                 </button>
                             </div>
                         </>

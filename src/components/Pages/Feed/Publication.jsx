@@ -191,7 +191,6 @@ export default withRouter((props)=>{
         });
     }
 
-    console.log("Feed",feed)
     return(
         <>
             {showLikes ? <ModalInfosLikes setShowLikes={setShowLikes} likes={feed.result_likes} users={users} /> : null}

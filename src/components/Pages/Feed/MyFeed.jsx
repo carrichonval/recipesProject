@@ -29,13 +29,14 @@ export default function Myfeed (props){
             return response.json();
         })
         .then((json) => {
-            console.log(json)
+            
+            let orderFeed = lodash.orderBy(json,['id'],['desc'])
             //Oragnise les commentaires par user_id
-            lodash.forEach(json,(feed)=>{
+            lodash.forEach(orderFeed,(feed)=>{
                 let orderResult = lodash.orderBy(feed.result_comments,['user_id'],['asc'])
                 feed.result_comments = orderResult
             })
-            setFeed(json)
+            setFeed(orderFeed)
         })
         .catch((error) => {
             console.log(error)

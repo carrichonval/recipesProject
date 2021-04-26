@@ -190,7 +190,7 @@ export const Infos = (props) =>{
                             <div className="px-4 py-5 sm:p-6">
                                 <dl>
                                     <dt className="text-sm text-center leading-5 font-medium text-gray-500 truncate">
-                                       Résultats postées
+                                       Résultats postés
                                     </dt>
                                     <Spring
                                         from={{number:0}}
@@ -213,7 +213,7 @@ export const Infos = (props) =>{
                             <div className="px-4 py-5 sm:p-6">
                                 <dl>
                                     <dt className="text-sm text-center leading-5 font-medium text-gray-500 truncate">
-                                        Commentaires attribués
+                                        Commentaires
                                     </dt>
                                     <Spring
                                         from={{number:0}}

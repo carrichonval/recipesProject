@@ -17,8 +17,10 @@ export default withRouter((props)=>{
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="flex-shrink-0 flex items-center">
-                                <div onClick={()=>setIsOpenMobile(!isOpenMobile)} className="h-12 w-12 lg:hidden block">
-                                    <Logo color="white" />
+                                <div  className="h-12 w-12 lg:hidden block">
+                                    <Link to="/">
+                                        <Logo color="white"/>
+                                    </Link>
                                 </div>
                                 <div className="h-12 w-12 lg:block hidden">
                                     <Link to="/">
@@ -36,9 +38,11 @@ export default withRouter((props)=>{
                                 <Link  to="/recipes" className={(props.location.pathname === "/recipes" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth  transition duration-150 ease-in-out"}>
                                     Recettes
                                 </Link>
-                                <Link  to="/cook" className={(props.location.pathname === "/cook" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth  transition duration-150 ease-in-out"}>
-                                    En cuisine
-                                </Link>
+                                {isAuthenticated() ? 
+                                    <Link  to="/cook" className={(props.location.pathname === "/cook" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth  transition duration-150 ease-in-out"}>
+                                        En cuisine
+                                    </Link>
+                                :null}
                                 <Link  to="/users" className={(props.location.pathname === "/users" ? "border-primary " : "border-transparent ") +"ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-600 hover:border-fourth  transition duration-150 ease-in-out"}>
                                     Utilisateurs
                                 </Link>
@@ -108,9 +112,11 @@ export default withRouter((props)=>{
                         <Link onClick={()=>setIsOpenMobile(!isOpenMobile)} to="/recipes" className={(props.location.pathname === "/recipes" ? "border-primary bg-fourth text-gray-900 " : "border-transparent ") +" mt-1 block pl-3 pr-4 py-2 border-l-4  text-base font-medium text-gray-600 hover:text-gray-700 hover:border-fourth transition duration-150 ease-in-out"}>
                             Recettes
                         </Link>
-                        <Link onClick={()=>setIsOpenMobile(!isOpenMobile)} to="/cook" className={(props.location.pathname === "/cook" ? "border-primary bg-fourth text-gray-900 " : "border-transparent ") +" mt-1 block pl-3 pr-4 py-2 border-l-4  text-base font-medium text-gray-600 hover:text-gray-700 hover:border-fourth transition duration-150 ease-in-out"}>
-                            En cuisine
-                        </Link>
+                        {isAuthenticated() ?
+                            <Link onClick={()=>setIsOpenMobile(!isOpenMobile)} to="/cook" className={(props.location.pathname === "/cook" ? "border-primary bg-fourth text-gray-900 " : "border-transparent ") +" mt-1 block pl-3 pr-4 py-2 border-l-4  text-base font-medium text-gray-600 hover:text-gray-700 hover:border-fourth transition duration-150 ease-in-out"}>
+                                En cuisine
+                            </Link>
+                        :null}
                         <Link onClick={()=>setIsOpenMobile(!isOpenMobile)} to="/users" className={(props.location.pathname === "/users" ? "border-primary bg-fourth text-gray-900 " : "border-transparent ") +" mt-1 block pl-3 pr-4 py-2 border-l-4  text-base font-medium text-gray-600 hover:text-gray-700 hover:border-fourth transition duration-150 ease-in-out"}>
                             Utilisateurs
                         </Link>
