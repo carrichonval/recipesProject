@@ -13,7 +13,7 @@ export default withRouter((props)=>{
     const [searchName,setSearchName] = useState("")
     
      //Pagination que si l'on a + de 16 users
-     const { next, prev, jump, currentPage, maxPage,startIndex, endIndex , paginate} = usePagination(users ? users : [],16)
+     const { next, prev, jump, currentPage, maxPage,startIndex, endIndex , paginate} = usePagination(users ? users : [],8)
 
     useEffect(() => {
         fetchUsers()
