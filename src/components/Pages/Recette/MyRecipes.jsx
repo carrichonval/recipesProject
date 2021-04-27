@@ -123,6 +123,8 @@ export default function MyRecipes (props){
         })
         .then((json) => {
             lodash.forEach(json,(recipe)=>{
+                let note = getNote(recipe.recette_notes)
+                recipe.note = note
                 recipe.value = recipe.id
                 recipe.label = recipe.type
             })
@@ -134,7 +136,19 @@ export default function MyRecipes (props){
 
     }
 
-    console.log(recipes)
+    const getNote = (notes) => {
+        console.log(notes)
+        
+        if(notes && notes.length > 0 ){
+            let total = 0
+            lodash.forEach(notes,(n)=>{
+                total += n.note
+            })
+            return Math.round(total / notes.length)
+        }else{
+            return null
+        }  
+    }
 
     if(recipes == null){
         return  <FetchDataLoader text="Récupération des données" />
