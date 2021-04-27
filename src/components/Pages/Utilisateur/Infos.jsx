@@ -11,15 +11,8 @@ export const Infos = (props) =>{
     const [user,setUser] = useState(null)
     const [note,setNote] = useState(null)
 
-
-    // Recupere l'object si on provient d'un lien, sinon on appel l'api pour récuperer l'utilisateur
     useEffect(() => {
-        if(!location.state){
-            fetchUser()
-        }else{
-            setUser(location.state.user)
-            getMoyenne(location.state.user)
-        }
+        fetchUser()
     },[]);
 
     //Récupère l'utilisateur
@@ -37,6 +30,7 @@ export const Infos = (props) =>{
             return response.json();
         })
         .then((json) => {
+        console.log(json)
           setUser(json)
           getMoyenne(json)
         })

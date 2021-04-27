@@ -13,6 +13,7 @@ export default function RecipesList (props){
     const [searchName,setSearchName] = useState("")
     const [searchType,setSearchType] = useState("")
     const [searchNote,setSearchNote] = useState("")
+    const [endFetch,setEndFetch] = useState(false)
     const options = [
         {
             value:null,
@@ -109,6 +110,7 @@ export default function RecipesList (props){
             return response.json();
         })
         .then((json) => {
+            console.log(json)
             lodash.forEach(json,(recipe)=>{
                 
                 let note = getNote(recipe.recette_notes)
@@ -116,7 +118,8 @@ export default function RecipesList (props){
                 recipe.value = recipe.id
                 recipe.label = recipe.type
             })
-          setRecipes(json)
+            setRecipes(json)
+            setEndFetch(true)
         })
         .catch((error) => {
             console.log(error)
@@ -143,7 +146,7 @@ export default function RecipesList (props){
     }
 
 
-    if(recipes.length == 0){
+    if(recipes.length == 0 && endFetch == false){
         return  <FetchDataLoader text="Récupération des données" />
     }
     
@@ -193,6 +196,11 @@ export default function RecipesList (props){
                     </div>
                 </div>
 
+                {recipes.length == 0 ? 
+                    <div className="flex text-center flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
+                        Il n'y a aucune recette pour le moment
+                    </div>
+                :null}
                 <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
                     {recipes.slice(startIndex, endIndex).map((recipe)=>{

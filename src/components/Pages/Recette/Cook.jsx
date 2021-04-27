@@ -21,6 +21,7 @@ export default function Cook (props){
     const [recetteStep,setRecetteStep] = useState(0)
     const [user,setUser] = useState({})
     const [h,setH] = useState(500)
+    const [endFetch,setEndFetch] = useState(false)
 
     useEffect(()=>{
         if(window.innerWidth > 800){
@@ -70,6 +71,7 @@ export default function Cook (props){
     useEffect(()=>{
         if(step > maxStep){
             addOneAchieve()
+            addOneAchieveRecette()
         }
         if(step == 3){
             document.body.className = "bg-white"
@@ -102,6 +104,31 @@ export default function Cook (props){
         });
     }
 
+    const addOneAchieveRecette = ()=>{
+        fetch(process.env.REACT_APP_API_URL+'/recipes/achieve', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body:JSON.stringify({
+                recette_id : recetteCook.id,
+                achieve : recetteCook.achieve +1
+            })
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((json) => {
+            console.log(json)
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+    }
+
     //Récupère les recettes
     const fetchRecettes = () => {
         fetch(process.env.REACT_APP_API_URL+'/recettes', {
@@ -117,7 +144,6 @@ export default function Cook (props){
             return response.json();
         })
         .then((json) => {
-            console.log(json)
             lodash.forEach(json,(recipe)=>{
                 let type = lodash.find(typeRecipes,(type)=>{
                     return type.label == recipe.type
@@ -127,6 +153,7 @@ export default function Cook (props){
                 recipe.label = recipe.type
             })
             setRecettes(json)
+            setEndFetch(true)
         })
         .catch((error) => {
             console.log(error)
@@ -171,7 +198,8 @@ export default function Cook (props){
     //check si pair/impair
     const isOdd = (num) => { return num % 2}
 
-    if(recettes.length == 0){
+    console.log(recetteCook)
+    if(recettes.length == 0 && endFetch == false){
         return(
             <FetchDataLoader text="Récupération des données" />
         )
@@ -181,8 +209,8 @@ export default function Cook (props){
             <>
                 <div className={" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col"}>
                     {step == 0 ?
-                        <div className="flex text-center flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
-                            C'est l'heure de cuisiner, choisis ta recette
+                        recettes.length != 0 && <div className="flex text-center flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
+                         C'est l'heure de cuisiner, choisis ta recette
                         </div>
                     : step == 1 ?
                         <div className="flex text-center flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
@@ -201,47 +229,52 @@ export default function Cook (props){
                     
         
                     {step == 0 ?
+                        recettes.length == 0 ?
+                            <div className="flex text-center flex-row items-center justify-center mb-4 w-full justify-center text-2xl text-fourth font-bold">
+                                Il n'y a aucune recette pour le moment
+                            </div>
+                        :
                         <div class="flex flex-col">
-                            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                                        <table class="min-w-full divide-y divide-gray-200">
-                                            <thead>
-                                                <tr>
-                                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                    Nom
-                                                </th>
-                                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                    Note
-                                                </th>
-                                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                
-                                                </th>
+                        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead>
+                                            <tr>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                Nom
+                                            </th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                Note
+                                            </th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            
+                                            </th>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {recettes.map((recette,i)=>{
-                                                    return(
-                                                        <tr class={isOdd(i) ? "bg-gray-50" : "bg-white"}>
-                                                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                                                {recette.name}
-                                                            </td>
-                                                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                                            {getNote(recette.recette_notes)}
-                                                            </td>
-                                                            <td onClick={()=>{setRecetteCook(recette);setMaxStep(2+recette.etapes.length);setStep(1)}} class="cursor-pointer px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                                                                <div  class="text-indigo-600 hover:text-indigo-900">Choisir</div>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })}
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {recettes.map((recette,i)=>{
+                                                return(
+                                                    <tr class={isOdd(i) ? "bg-gray-50" : "bg-white"}>
+                                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                                            {recette.name}
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                        {getNote(recette.recette_notes)}
+                                                        </td>
+                                                        <td onClick={()=>{setRecetteCook(recette);setMaxStep(2+recette.etapes.length);setStep(1)}} class="cursor-pointer px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                                                            <div  class="text-indigo-600 hover:text-indigo-900">Choisir</div>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     :null}
 
                     {step == 1 ?
