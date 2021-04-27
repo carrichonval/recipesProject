@@ -7,7 +7,7 @@ export default function NotFound (props) {
             <div className="max-w-md w-full">
                 <div>
                     <h2 className="my-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-                        Cette page n'existe pas 
+                        Cette page n'existe pas  désolé :/
                     </h2>
                 </div>
                 <svg  viewBox="0 0 470 290">

@@ -5,7 +5,7 @@ import {useParams,useLocation} from 'react-router-dom'
 import FetchDataLoader from '../../composants/FetchDataLoader'
 import lodash from 'lodash'
 
-export default function Creation (props){
+export default function Visualisation (props){
 
     const params = useParams()
     const location = useLocation()
@@ -15,8 +15,6 @@ export default function Creation (props){
     const [error,setError] = useState(false)
     const [showModal,setShowModal] = useState(false)
     const [haveNote,setHaveNote] = useState(false)
-
-    
     const typeRecipes = [
         {
             value:"0",
@@ -39,15 +37,18 @@ export default function Creation (props){
     
     // Recupere l'object si on provient d'un lien, sinon on appel l'api pour récuperer l'utilisateur
     useEffect(() => {
-        console.log(location)
         if(!location.state){
             fetchRecipe()
         }else{
+            let type = lodash.find(typeRecipes,(type)=>{
+                return type.label == location.state.recipe.type
+            })
+            location.state.recipe.type = type
             setRecipe(location.state.recipe)
-           
         }
     }, []);
 
+    //Récupère la recette
     const fetchRecipe = () =>{
         fetch(process.env.REACT_APP_API_URL+'/recettes/'+params.id, {
             method: 'GET',
@@ -74,8 +75,8 @@ export default function Creation (props){
         });
     }
 
+    //Vérifie si on a pas déjà noté
     const checkNote = () =>{
-        console.log(recipe)
         let find = lodash.find(recipe.recette_notes,(note)=>{
             return note.user_id == getUserAuth().id
         })
@@ -84,10 +85,10 @@ export default function Creation (props){
         }else{
             setHaveNote(false)
         }
-        
         setShowModal(true)
     }
 
+    //Attribuer une note
     const noter = () =>{
         setShowModal(false)
         fetch(process.env.REACT_APP_API_URL+'/notes', {
@@ -108,7 +109,6 @@ export default function Creation (props){
             return response.json();
         })
         .then((json) => {
-            console.log(json)
             setSuccess(true)
             setTimeout(() => {
                 setSuccess(false)
@@ -119,11 +119,9 @@ export default function Creation (props){
             setTimeout(() => {
                 setError(false)
             }, 2000);
-            console.log(error)
         });
     }
     
-
     if(recipe == null){
         return <FetchDataLoader text="Récupérations des informations"></FetchDataLoader>
     }else{
@@ -236,6 +234,7 @@ export default function Creation (props){
                     <div className="my-3">
                         <Select
                             options={typeRecipes}
+                            isDisabled={true}
                             placeholder="Type de recette"
                             className="w-full"
                             value={recipe.type}

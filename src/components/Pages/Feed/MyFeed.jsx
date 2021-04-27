@@ -15,6 +15,7 @@ export default function Myfeed (props){
         fetchUsers()
     }, []);
 
+    //Récupère les résultats d'un utilisateur
     const fetchFeed = () =>{
         fetch(process.env.REACT_APP_API_URL+'/results/users/'+location.state.user.id, {
             method: 'GET',
@@ -31,7 +32,7 @@ export default function Myfeed (props){
         .then((json) => {
             
             let orderFeed = lodash.orderBy(json,['id'],['desc'])
-            //Oragnise les commentaires par user_id
+            //Organise les commentaires par user_id
             lodash.forEach(orderFeed,(feed)=>{
                 let orderResult = lodash.orderBy(feed.result_comments,['user_id'],['asc'])
                 feed.result_comments = orderResult
@@ -71,7 +72,7 @@ export default function Myfeed (props){
     return (
         <>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col">
-                {feed.length == 0 ? 
+                {feed.length === 0 ? 
                     <div className="flex w-full">
                         <div className="rounded-md bg-blue-200 p-2 mt-2 mx-4 w-full">
                             <div className="flex">

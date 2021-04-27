@@ -1,5 +1,7 @@
 import React from 'react';
 
+//Logo principal
+
 export default function Logo ({color}) {
 
     return(

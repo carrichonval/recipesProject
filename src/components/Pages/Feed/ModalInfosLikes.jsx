@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import lodash from 'lodash'
 
 
 const ModalInfosLikes = ({ setShowLikes, likes, users }) => {
 
+    //Récupère l'utilisateur
     const findUser = (user_id) => {
         let find = lodash.find(users, (user) => {
-            if (user.id == user_id) {
+            if (user.id === user_id) {
                 return true
             }
         })
@@ -34,8 +35,7 @@ const ModalInfosLikes = ({ setShowLikes, likes, users }) => {
                         <div class="px-4 py-5 sm:p-0">
                             <dl>
                                 {likes.map((like, i) => {
-                                    console.log(like)
-                                    if (i == 0) {
+                                    if (i === 0) {
                                         return (
                                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                                                 <dt class="text-sm leading-5 font-medium ">

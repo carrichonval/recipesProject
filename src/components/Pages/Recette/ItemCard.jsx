@@ -28,8 +28,8 @@ const ItemCard = ({recipe,deletable,fetchRecettes})=>{
         }
     }
 
+    //recuperer la note
     const getNote = (notes) => {
-        console.log(notes)
         
         if(notes && notes.length > 0 ){
             let total = 0
@@ -42,6 +42,7 @@ const ItemCard = ({recipe,deletable,fetchRecettes})=>{
         }  
     }
 
+    //supprimer la recette
     const deleteRecette = async () => {
         fetch(process.env.REACT_APP_API_URL+'/recettes', {
             method: 'DELETE',
@@ -60,7 +61,6 @@ const ItemCard = ({recipe,deletable,fetchRecettes})=>{
             return response.json();
         })
         .then((json) => {
-            console.log(json)
             fetchRecettes()
         })
         .catch((error) => {

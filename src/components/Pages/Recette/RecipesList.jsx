@@ -5,7 +5,7 @@ import Pagination from '../../composants/Pagination';
 import usePagination from '../../hooks/usePagination';
 import ItemCard from './ItemCard'
 import FetchDataLoader from '../../composants/FetchDataLoader'
-import {getUserAuth,isAuthenticated} from '../../functions/auth'
+import {isAuthenticated} from '../../functions/auth'
 
 export default function RecipesList (props){
 
@@ -81,9 +81,8 @@ export default function RecipesList (props){
         fetchRecipes()
     }, []);
 
-    const getNote = (notes) => {
-        console.log(notes)
-        
+    //Récupère la note
+    const getNote = (notes) => {        
         if(notes && notes.length > 0 ){
             let total = 0
             lodash.forEach(notes,(n)=>{
@@ -95,6 +94,7 @@ export default function RecipesList (props){
         }  
     }
 
+    //Récupère les recettes
     const fetchRecipes = () =>{
         fetch(process.env.REACT_APP_API_URL+'/recettes', {
             method: 'GET',
@@ -109,11 +109,9 @@ export default function RecipesList (props){
             return response.json();
         })
         .then((json) => {
-            console.log(json)
             lodash.forEach(json,(recipe)=>{
                 
                 let note = getNote(recipe.recette_notes)
-                console.log(note)
                 recipe.note = note
                 recipe.value = recipe.id
                 recipe.label = recipe.type
@@ -125,6 +123,7 @@ export default function RecipesList (props){
         });
     }
 
+    //Trier par
     const trierPar = (e) => {
         
         switch (e.value) {
@@ -147,7 +146,6 @@ export default function RecipesList (props){
     if(recipes.length == 0){
         return  <FetchDataLoader text="Récupération des données" />
     }
-    console.log("search",searchType)
     
     return (
         <>
@@ -198,7 +196,6 @@ export default function RecipesList (props){
                 <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
                     {recipes.slice(startIndex, endIndex).map((recipe)=>{
-                        console.log('r',recipe.type)
                         if(recipe.name.toLowerCase().search(searchName.toLowerCase()) === -1 ){
                             return null
                         }

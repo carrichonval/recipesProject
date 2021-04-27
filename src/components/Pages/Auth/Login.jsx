@@ -25,12 +25,12 @@ export default function Login (props){
 
     },[])
 
+    //Vérfie si on appuie sur Entrée pour valider
     const checkEnterPress = (e) => {
-        if(e.key == "Enter"){
+        if(e.key === "Enter"){
             document.getElementById("login").click()
         }
     }
-
 
     //Connexion
     const connexion = (props) => {

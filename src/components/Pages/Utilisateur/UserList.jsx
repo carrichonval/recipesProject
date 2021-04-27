@@ -10,7 +10,6 @@ export default withRouter((props)=>{
 
 
     const [users,setUsers] = useState([])
-
     const [searchName,setSearchName] = useState("")
     
      //Pagination que si l'on a + de 16 users
@@ -20,6 +19,7 @@ export default withRouter((props)=>{
         fetchUsers()
     }, []);
 
+    //Récupère les utilsateurs
     const fetchUsers = () =>{
         fetch(process.env.REACT_APP_API_URL+'/users', {
             method: 'GET',
@@ -34,11 +34,10 @@ export default withRouter((props)=>{
             return response.json();
         })
         .then((json) => {
-          console.log(json)
           setUsers(json)
         })
         .catch((error) => {
-            
+           console.log(error) 
         });
     }
 

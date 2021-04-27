@@ -2,7 +2,6 @@ import React,{useState,useEffect} from 'react';
 import {useParams,useLocation} from 'react-router-dom'
 import {Spring} from 'react-spring/renderprops'
 import moment from 'moment'
-import lodash from 'lodash'
 import FetchDataLoader from '../../composants/FetchDataLoader'
 
 export const Infos = (props) =>{
@@ -21,8 +20,9 @@ export const Infos = (props) =>{
             setUser(location.state.user)
             getMoyenne(location.state.user)
         }
-    }, []);
+    },[]);
 
+    //Récupère l'utilisateur
     const fetchUser = () =>{
         fetch(process.env.REACT_APP_API_URL+'/users/'+params.id, {
             method: 'GET',
@@ -45,7 +45,7 @@ export const Infos = (props) =>{
         });
     }
 
-    
+    //Récupère la moyenne
     const getMoyenne = (user) => {
         fetch(process.env.REACT_APP_API_URL+'/getMoyenne/'+user.id, {
             method: 'GET',
@@ -68,6 +68,7 @@ export const Infos = (props) =>{
 
     }
 
+    //Convertit en date
     const convertDate = (date) =>{
         return moment(date).format('DD/MM/YYYY')
     }
@@ -129,7 +130,7 @@ export const Infos = (props) =>{
                                 </div>
                                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt class="text-sm leading-5 font-medium text-gray-500">
-                                    Note moyenne
+                                        Note moyenne
                                     </dt>
                                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                                         {note}

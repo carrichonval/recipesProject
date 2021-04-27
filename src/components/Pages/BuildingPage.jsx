@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Lottie from 'react-lottie'
 import build from "../lotties/build.json" 
-export default function Cook (props){
 
-    console.log(window.innerHeight,window.innerWidth)
+//Page pour afficher que la page est en construction
+export default function Cook (props){
 
     const [h,setH] = useState(500)
 
@@ -28,13 +28,12 @@ export default function Cook (props){
                    Cette page est en cours de construction ...
                 </div>
                 <Lottie
-                        options={buildOpts}
-                        isClickToPauseDisabled={true}
-                        height={h}
-                        width={window.innerWidth-100}
-                    />
+                    options={buildOpts}
+                    isClickToPauseDisabled={true}
+                    height={h}
+                    width={window.innerWidth-100}
+                />
             </div>
         </>
-        
     )
 }

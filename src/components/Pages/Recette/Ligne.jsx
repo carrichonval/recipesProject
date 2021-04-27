@@ -1,6 +1,8 @@
-import React,{useState,useEffect} from 'react';
+import React from 'react';
 
-const Item = ({type,obj,onChangeIngredient,onChangeEtape,deleteIngredient,deleteEtape}) =>{
+//Ligne pour les ingredients et etapes
+
+const Ligne = ({type,obj,onChangeIngredient,onChangeEtape,deleteIngredient,deleteEtape}) =>{
 
     switch (type) {
         case "ingredient":
@@ -44,4 +46,4 @@ const Item = ({type,obj,onChangeIngredient,onChangeEtape,deleteIngredient,delete
 
 }
 
-export default Item
+export default Ligne

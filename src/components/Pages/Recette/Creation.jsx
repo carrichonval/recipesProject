@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
-import Item from './Item'
+import Ligne from './Ligne'
 import lodash from 'lodash'
 import {getUserAuth} from '../../functions/auth'
 
 export default function Creation (props){
 
     const [success,setSuccess] = useState(false)
-
-
     const typeRecipes = [
         {
             value:"0",
@@ -28,7 +26,6 @@ export default function Creation (props){
             label:"Gateaux"
         }
     ]
-    
     const [recipe,setRecipe] = useState({
         name:"",
         type:"",
@@ -50,12 +47,13 @@ export default function Creation (props){
     })
 
 
-
+    //Récupère le dernier ID
     const getLastID = (list) => {
         let last = lodash.maxBy(list,"id")
         return last.id ++
     }
 
+    //Ajouter un agredient
     const addIngredient = () => {
         if(recipe.ingredients.length == 0){
             //On ajoute l'id n°1
@@ -66,6 +64,7 @@ export default function Creation (props){
         }
     }
 
+    //Ajouter une etape
     const addEtape = () =>{
         if(recipe.etapes.length == 0){
             //On ajoute l'id n°1
@@ -76,6 +75,7 @@ export default function Creation (props){
         }
     }
 
+    //A l'input d'un ingredient
     const onChangeIngredient = (e,id,attr) =>{
         let ingredients = JSON.parse(JSON.stringify(recipe.ingredients))
         ingredients = lodash.forEach(ingredients,(ing)=>{
@@ -86,6 +86,7 @@ export default function Creation (props){
         setRecipe({...recipe,ingredients:ingredients})
     }
 
+    //A l'input d'une etape
     const onChangeEtape = (e,id,attr) =>{
         let etapes = JSON.parse(JSON.stringify(recipe.etapes))
         etapes = lodash.forEach(etapes,(etape)=>{
@@ -96,6 +97,7 @@ export default function Creation (props){
         setRecipe({...recipe,etapes:etapes})
     }
 
+    //supprime un ingredient
     const deleteIngredient = (id) =>{
         let ingredients = JSON.parse(JSON.stringify(recipe.ingredients))
         let updateIngredients = []
@@ -107,6 +109,7 @@ export default function Creation (props){
         setRecipe({...recipe,ingredients:updateIngredients})
     }
 
+    //supprime une etape
     const deleteEtape = (id) => {
         let etapes = JSON.parse(JSON.stringify(recipe.etapes))
         let updateEtapes = []
@@ -118,6 +121,7 @@ export default function Creation (props){
         setRecipe({...recipe,etapes:updateEtapes})
     }
 
+    //enregistrer la recette
     const enregistrerRecette = async () => {
         let recette = await fetchRecetteID();
         let recette_id = recette.id
@@ -139,6 +143,7 @@ export default function Creation (props){
        
     }
 
+    //Ajoute la recette en BDD
     const fetchRecetteID = () =>{
         const response = fetch(process.env.REACT_APP_API_URL+'/recettes', {
             method: 'POST',
@@ -166,6 +171,7 @@ export default function Creation (props){
         return response
     }
 
+    //Ajoute les ingredients en BDD
     const fetchAddIngredient = (recette_id,ingredient) =>{
         const response = fetch(process.env.REACT_APP_API_URL+'/ingredients', {
             method: 'POST',
@@ -194,6 +200,7 @@ export default function Creation (props){
         return response
     }
 
+    //Ajoute les etapes en BDD
     const fetchAddEtape = (recette_id,etape) =>{
         const response = fetch(process.env.REACT_APP_API_URL+'/etapes', {
             method: 'POST',
@@ -221,9 +228,7 @@ export default function Creation (props){
 
         return response
     }
-    
 
-    console.log(recipe)
     return (
         <>
         
@@ -282,7 +287,7 @@ export default function Creation (props){
 
                                 {recipe.ingredients.map((ingredient)=>{
                                     return(
-                                        <Item key={ingredient.id} deleteIngredient={deleteIngredient} deleteEtape={deleteEtape} onChangeEtape={onChangeEtape} onChangeIngredient={onChangeIngredient} obj={ingredient} type="ingredient" />
+                                        <Ligne key={ingredient.id} deleteIngredient={deleteIngredient} deleteEtape={deleteEtape} onChangeEtape={onChangeEtape} onChangeIngredient={onChangeIngredient} obj={ingredient} type="ingredient" />
                                     )
                                 })}
 
@@ -305,7 +310,7 @@ export default function Creation (props){
                             <div>
                                 {recipe.etapes.map((etape)=>{
                                     return(
-                                        <Item key={etape.id} deleteIngredient={deleteIngredient} deleteEtape={deleteEtape} onChangeEtape={onChangeEtape} onChangeIngredient={onChangeIngredient} obj={etape} type="etape" />
+                                        <Ligne key={etape.id} deleteIngredient={deleteIngredient} deleteEtape={deleteEtape} onChangeEtape={onChangeEtape} onChangeIngredient={onChangeIngredient} obj={etape} type="etape" />
                                     )
                                 })}
                                 

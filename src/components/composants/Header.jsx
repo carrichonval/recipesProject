@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { withRouter,Link } from "react-router-dom";
-import { isAuthenticated,getUserAuth,deconnexion,isAdmin } from '../functions/auth'
+import { isAuthenticated,deconnexion,getUserAuth} from '../functions/auth'
 import Logo from '../svg/Logo'
 
 export default withRouter((props)=>{
 
     const [isOpenMobile,setIsOpenMobile] = useState(false)
-
-
-    
-    //Header qui s'affiche seulement quand on est connecté    
+ 
         return (
             <>
             <nav id="navbar" className="bg-primary border-b border-gray-200 z-50 mb-4 sticky top-0 ">
@@ -56,7 +53,6 @@ export default withRouter((props)=>{
                         </div>
                         <div className="hidden sm:ml-6 lg:flex sm:items-center">
                            
-
                             {/*<!-- Profile dropdown -->*/}
                             {isAuthenticated() ?
                                 <div className="ml-3 relative">
@@ -134,7 +130,7 @@ export default withRouter((props)=>{
                                             
                                         </div>
                                         <div className="text-sm font-medium leading-5 text-gray-500">
-                                            Valentin
+                                            {getUserAuth().first_name}
                                         </div>
                                     </div>
                                 </div>
@@ -155,12 +151,8 @@ export default withRouter((props)=>{
                         </div>
                     }
                     </div>
-
                 </div>
-
             </nav>
-
-
             </>
         )
 })

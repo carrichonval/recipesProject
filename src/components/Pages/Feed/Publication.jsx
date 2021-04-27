@@ -1,19 +1,19 @@
 import React, {useState,useEffect} from 'react'
-import lodash, { divide } from 'lodash'
+import lodash from 'lodash'
 import ModalInfosLikes from './ModalInfosLikes'
 import {getUserAuth,isAuthenticated} from '../../functions/auth'
-import {withRouter,Link} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 
 
 // red #B4403C
 
 export default withRouter((props)=>{
-    const {feed,fetchFeed,users,location,deletable} = props
+    const {feed,fetchFeed,users,deletable} = props
     const [findLike,setFindLike] = useState(false)
     const [showLikes,setShowLikes] = useState(false)
     const [hidden,setHidden] = useState(true)
     const [hiddenComment,setHiddenComment] = useState(true)
-    const [userAuth,setUserAuth] = useState(getUserAuth())
+    const userAuth =getUserAuth()
     const [haveComment,setHaveComment] = useState(false)
     const [comment,setComment] = useState("")
     const [copyLink,setCopyLink] = useState(false)
@@ -22,9 +22,10 @@ export default withRouter((props)=>{
         searchLike(feed)
     }, [feed]);
 
+    //Vérifie si l'utilisateur à liker la publication
     const searchLike = (feed) => {
         let find = lodash.find(feed.result_likes,(result)=>{
-            if(result.user_id == userAuth.id){
+            if(result.user_id === userAuth.id){
                 return true
             }
         })
@@ -35,9 +36,10 @@ export default withRouter((props)=>{
         }
     }
 
+    //trouve un utilisateur
     const findUser = (user_id) => {
         let find = lodash.find(users,(user)=>{
-            if(user.id == user_id){
+            if(user.id === user_id){
                 return true
             }
         })
@@ -51,7 +53,7 @@ export default withRouter((props)=>{
     //Vérifie si l'utilisateur à déjà laisser un commentaire sur la plublication
     const checkAddComment = () =>{
         let find = lodash.find(feed.result_comments,(result)=>{
-            if(result.user_id == userAuth.id){
+            if(result.user_id === userAuth.id){
                 return true
             }
         })
@@ -65,6 +67,7 @@ export default withRouter((props)=>{
         }
     }
 
+    //Ajoute un commentaire
     const addComment = () => {
         //Cacher la zone d'ajout
         setHiddenComment(true)
@@ -97,6 +100,7 @@ export default withRouter((props)=>{
         });
     }
 
+    //Ajoute un like
     const addLike = () => {
         //Ajouter en base le commentaire
         fetch(process.env.REACT_APP_API_URL + '/likes', {
@@ -125,6 +129,7 @@ export default withRouter((props)=>{
         });
     }
 
+    //Supprime le like
     const deleteLike = () => {
         //Ajouter en base le commentaire
         fetch(process.env.REACT_APP_API_URL + '/unlikes', {
@@ -153,6 +158,7 @@ export default withRouter((props)=>{
         });
     }
 
+    //Ajoute au presse/papier
     const addPressPaper = () =>{
         navigator.clipboard.writeText(process.env.REACT_APP_URL+"/results/"+feed.id)
         if(!copyLink){
@@ -164,7 +170,7 @@ export default withRouter((props)=>{
         }
         
     }
-
+    //Supprime la publication
     const deleteResult = async () => {
         fetch(process.env.REACT_APP_API_URL+'/results', {
             method: 'DELETE',
@@ -198,7 +204,7 @@ export default withRouter((props)=>{
                 <div class="bg-white border rounded-md max-w-md w-full">
                     <div class="grid grid-cols-8 px-4 py-3 items-center">
                         
-                        <img onClick={()=>props.history.push("/users/"+feed.user_id)} class="h-8 w-8 rounded-full cursor-pointer" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60"/>
+                        <img alt="img" onClick={()=>props.history.push("/users/"+feed.user_id)} class="h-8 w-8 rounded-full cursor-pointer" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60"/>
                         
                         <div className="col-span-6">
                             <div class="ml-3 ">
@@ -222,7 +228,7 @@ export default withRouter((props)=>{
                         :null}
                     </div>
                     <div className="flex justify-center">
-                        <img  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60"/>
+                        <img alt="img" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60"/>
                     </div>
                     <div class="flex items-center justify-between mx-4 mt-3 mb-2">
                         {isAuthenticated() ? 
@@ -318,7 +324,7 @@ export default withRouter((props)=>{
                                             <div className="col-span-2 font-normal">{r.comment}</div>
                                         </div>
                                        )
-                                   }else if(i == 2){
+                                   }else if(i === 2){
                                         return(
                                             <>
                                                 <div className="grid my-2 grid-cols-3">
@@ -336,12 +342,12 @@ export default withRouter((props)=>{
                                          </>
                                         )
                                    }else{
-                                    return(
-                                        <div className="grid grid-cols-3 ml-2">
-                                            <div className="font-medium mr-2">{findUser(r.user_id)}</div>
-                                            <div className="col-span-2 font-normal">{r.comment}</div>
-                                        </div>
-                                    )
+                                        return(
+                                            <div className="grid grid-cols-3 ml-2">
+                                                <div className="font-medium mr-2">{findUser(r.user_id)}</div>
+                                                <div className="col-span-2 font-normal">{r.comment}</div>
+                                            </div>
+                                        )
                                    }
                                 })}
                         </div>

@@ -7,7 +7,7 @@ export default function Home (props){
 
     const [feed,setFeed] = useState([])
     const [users,setUsers] = useState([])
-    const [userAuth,setUserAuth] = useState(getUserAuth())
+    const userAuth = getUserAuth()
     const [showModal,setShowModal] = useState(false)
 
     useEffect(() => {
@@ -15,6 +15,7 @@ export default function Home (props){
         fetchUsers()
     }, []);
 
+    //Récupère les résultats
     const fetchFeed = () =>{
         fetch(process.env.REACT_APP_API_URL+'/results', {
             method: 'GET',
@@ -42,6 +43,7 @@ export default function Home (props){
         });
     }
 
+    //Ajoute la publication en BDD
     const addPublication = () =>{
         fetch(process.env.REACT_APP_API_URL+'/results', {
             method: 'POST',
@@ -69,6 +71,7 @@ export default function Home (props){
         });
     }
 
+    //Récupère les utilisateurs
     const fetchUsers = () =>{
         fetch(process.env.REACT_APP_API_URL+'/users', {
             method: 'GET',
@@ -92,49 +95,46 @@ export default function Home (props){
     
     return (
         <>
-            {isAuthenticated() ? <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col">
-                <ul class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-4 xl:grid-cols-4">
-                    <button onClick={()=>setShowModal(true)} className="w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-primary hover:bg-fourth focus:outline-none focus:border-red-800 focus:shadow-outline-red active:bg-red-800 transition duration-150 ease-in-out">
-                        Poster un résultat
-                    </button>
-                </ul>
-            </div>
+            {isAuthenticated() ? 
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col">
+                    <ul class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:grid-cols-3 xl:grid-cols-3">
+                        <button onClick={()=>setShowModal(true)} className="w-full md:col-start-2 flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-primary hover:bg-fourth focus:outline-none focus:border-red-800 focus:shadow-outline-red active:bg-red-800 transition duration-150 ease-in-out">
+                            Poster un résultat
+                        </button>
+                    </ul>
+                </div>
             :null}
 
             {showModal ?
 
                 <div class="fixed z-10 inset-0 overflow-y-auto">
                     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-
-                    <div class="fixed inset-0 transition-opacity">
-                        <div onClick={() => setShowModal(false)}  class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                    </div>
-                
-                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
-
-                    <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                        <div>
-                        <div class="mt-3 text-center sm:mt-5">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-                            Ajouter une image
-                            </h3>
-                            <div class="mt-2">
-                            
+                        <div class="fixed inset-0 transition-opacity">
+                            <div onClick={() => setShowModal(false)}  class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                        </div>
+                        <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
+                        <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                            <div>
+                                <div class="mt-3 text-center sm:mt-5">
+                                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                                        Ajouter une image
+                                    </h3>
+                                    <div class="mt-2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-5 sm:mt-6">
+                                <span class="flex w-full rounded-md shadow-sm">
+                                    <button onClick={()=>addPublication()} type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-second text-base leading-6 font-medium text-white shadow-sm hover:bg-fourth focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                                    Ajouter la publication
+                                    </button>
+                                </span>
                             </div>
                         </div>
-                        </div>
-                        <div class="mt-5 sm:mt-6">
-                        <span class="flex w-full rounded-md shadow-sm">
-                            <button onClick={()=>addPublication()} type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-second text-base leading-6 font-medium text-white shadow-sm hover:bg-fourth focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                            Ajouter la publication
-                            </button>
-                        </span>
-                        </div>
-                    </div>
                     </div>
                 </div>
-                
-                :null}
+
+            :null}
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 flex flex-col">
                 <ul class="grid grid-cols-1 gap-6 lg:grid-cols-3 xl:grid-cols-3">

@@ -3,8 +3,6 @@ import { isAuthenticated } from '../../functions/auth'
 import Logo from '../../svg/Logo'
 import lodash from 'lodash'
 
-
-
 export default function Signup(props) {
 
     const [user,setUser] = useState(
@@ -24,7 +22,6 @@ export default function Signup(props) {
     const [logins,setLogins] = useState([])
     const [availableEmail,setAvailableEmail] = useState(true)
     const [availableLogin,setAvailableLogin] = useState(true)
-
     const [error, setError] = useState('')
     const [success, setSuccess] = useState(false)
     const [passwordVisible, setPasswordVisible] = useState(false)
@@ -54,7 +51,7 @@ export default function Signup(props) {
         checkAvailableLogin(user.login)
     }, [user])
 
-
+    //Récupère les emails
     const fetchEmails = () =>{
         fetch(process.env.REACT_APP_API_URL+'/users/emails', {
             method: 'GET',
@@ -77,6 +74,7 @@ export default function Signup(props) {
         });
     }
 
+    //Récupère les logins
     const fetchLogins = () =>{
         fetch(process.env.REACT_APP_API_URL+'/users/logins', {
             method: 'GET',
@@ -99,12 +97,13 @@ export default function Signup(props) {
         });
     }
 
-
+    //Vérifie le format de l'email
     function isValidEmail(emailAddress) {
         var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
         return pattern.test(emailAddress);
     };
 
+    //Vérifie si l'adresse email n'est pas déjà utilisé
     const checkAvailableEmail = (email) =>{
         let find = lodash.find(emails,(mail)=>{
             return mail.email == email
@@ -118,6 +117,7 @@ export default function Signup(props) {
         }
     }
 
+    //Vérifier si l'identifiant n'est pas déjà utilisé
     const checkAvailableLogin = (login) =>{
         let find = lodash.find(logins,(l)=>{
             return l.login == login
@@ -132,6 +132,7 @@ export default function Signup(props) {
         }
     }
 
+    //Vérifie si le mot de passe est bien recopié
     function isValidPassword(password, confirmPassword) {
         if(password == "" || confirmPassword == ""){
             return false
@@ -144,7 +145,7 @@ export default function Signup(props) {
         }
     }
 
-    //Connexion
+    //Enregistrement en BDD
     const enregistrement = (props) => {
 
         fetch(process.env.REACT_APP_API_URL + '/register', {
@@ -249,7 +250,7 @@ return (
                     </div>
                     <div className="ml-3">
                         <h3 className="text-sm leading-5 font-medium text-red-800">
-                            Cette adresse mail est déjà utilisée
+                            Cette adresse email est déjà utilisée
                         </h3>
                     </div>
                 </div>
@@ -265,7 +266,7 @@ return (
                     </div>
                     <div className="ml-3">
                         <h3 className="text-sm leading-5 font-medium text-red-800">
-                            Ce login est déjà utilisé
+                            Cet identifiant est déjà utilisé
                         </h3>
                     </div>
                 </div>
@@ -273,8 +274,6 @@ return (
         }
         <div className="bg-gray-100 py-2 px-4 sm:rounded-lg sm:px-10">
             <div>
-
-
                 <div>
                     <label htmlFor="first_name" className="m block text-sm font-medium leading-5 text-gray-700">
                         Prénom
@@ -283,7 +282,6 @@ return (
                         <input placeholder="Prénom " autoComplete="off" onChange={(e)=>setUser({...user,first_name:e.target.value})} id="first_name" type="text" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 outline-none transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                     </div>
                 </div>
-
                 <div>
                     <label htmlFor="last_name" className="block text-sm font-medium leading-5 text-gray-700">
                         Nom
@@ -292,7 +290,6 @@ return (
                         <input placeholder="Nom " autoComplete="off" onChange={(e)=>setUser({...user,last_name:e.target.value})} id="last_name" type="text" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 outline-none transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                     </div>
                 </div>
-
                 <div>
                     <label htmlFor="login" className="block text-sm font-medium leading-5 text-gray-700">
                         Identifiant
@@ -301,7 +298,6 @@ return (
                         <input placeholder="Identifiant" autoComplete="off" onChange={(e)=>setUser({...user,login:e.target.value})} id="login" type="text" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 outline-none transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                     </div>
                 </div>
-
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium leading-5 text-gray-700">
                         Adresse email
@@ -310,7 +306,6 @@ return (
                         <input placeholder="Adresse email" autoComplete="off" onChange={(e)=>setUser({...user,email:e.target.value})} id="email" type="email" className={(isValidEmail(user.email) ? " border-green-300  " : " border-red-500 ") + " outline-none appearance-none block w-full px-3 py-2 border rounded-md placeholder-gray-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5"} />
                     </div>
                 </div>
-
                 <div>
                     <label htmlFor="description" className="block text-sm font-medium leading-5 text-gray-700">
                         Description
@@ -319,7 +314,6 @@ return (
                         <input placeholder="Description" autoComplete="off" onChange={(e)=>setUser({...user,description:e.target.value})} id="description" type="text" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 outline-none transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                     </div>
                 </div>
-
                 <div>
                     <label htmlFor="password" className="block text-sm font-medium leading-5 text-gray-700">
                         Mot de passe
@@ -338,7 +332,6 @@ return (
                         </div>
                     </div>
                 </div>
-
                 <div>
                     <label htmlFor="password" className="block text-sm font-medium leading-5 text-gray-700">
                         Confirmation du mot de passe
@@ -357,8 +350,6 @@ return (
                         </div>
                     </div>
                 </div>
-
-
                 <div className="mt-6">
                     <span className="block w-full rounded-md shadow-sm">
                         <button disabled={isValid ? false : true} onClick={() => enregistrement(props)} className={(isValid ? " bg-primary hover:bg-indigo-500 " : " bg-gray-400 ")+" w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white   transition duration-150 ease-in-out"}>
@@ -367,7 +358,6 @@ return (
                     </span>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

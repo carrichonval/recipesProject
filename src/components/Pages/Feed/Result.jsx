@@ -15,6 +15,7 @@ export default function Result (props){
         fetchUsers()
     }, []);
 
+    //Récupère le résultat
     const fetchFeed = () =>{
         fetch(process.env.REACT_APP_API_URL+'/results/'+params.id, {
             method: 'GET',
@@ -29,10 +30,8 @@ export default function Result (props){
             return response.json();
         })
         .then((json) => {
-            console.log(json)
-            //Oragnise les commentaires par user_id
+            //Organise les commentaires par user_id
             let orderResult = lodash.orderBy(json.result_comments,['user_id'],['asc'])
-            console.log(orderResult)
             json.result_comments = orderResult
             setFeed(json)
         })
@@ -41,6 +40,7 @@ export default function Result (props){
         });
     }
 
+    //Récupère les utilisateurs
     const fetchUsers = () =>{
         fetch(process.env.REACT_APP_API_URL+'/users', {
             method: 'GET',
@@ -62,7 +62,7 @@ export default function Result (props){
         });
     }
 
-    if(feed.length == 0 ){
+    if(feed.length === 0 ){
         return null
     }else{
         return (

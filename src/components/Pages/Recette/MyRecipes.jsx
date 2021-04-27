@@ -5,12 +5,10 @@ import Pagination from '../../composants/Pagination';
 import usePagination from '../../hooks/usePagination';
 import ItemCard from './ItemCard'
 import FetchDataLoader from '../../composants/FetchDataLoader'
-import {useLocation} from 'react-router-dom'
 import { getUserAuth } from '../../functions/auth';
 
 export default function MyRecipes (props){
 
-    const location = useLocation()
     const [recipes,setRecipes] = useState(null)
     const [searchName,setSearchName] = useState("")
     const [searchType,setSearchType] = useState("")
@@ -88,7 +86,7 @@ export default function MyRecipes (props){
         fetchRecettes()
     }, []);
 
-
+    //trier
     const trierPar = (e) => {
         switch (e.value) {
             case "0":
@@ -108,6 +106,7 @@ export default function MyRecipes (props){
         }
     }
 
+    //recuperer les recettes
     const fetchRecettes = async () => {
         fetch(process.env.REACT_APP_API_URL+'/recettes/user/'+getUserAuth().id, {
             method: 'GET',
@@ -136,8 +135,8 @@ export default function MyRecipes (props){
 
     }
 
+    //recupere la note
     const getNote = (notes) => {
-        console.log(notes)
         
         if(notes && notes.length > 0 ){
             let total = 0

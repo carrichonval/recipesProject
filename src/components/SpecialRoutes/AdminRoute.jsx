@@ -6,8 +6,8 @@ import {Route,Redirect} from 'react-router-dom'
 export default function AdminRoute  ({component: Component, ...rest}) {
     return (
 
-        // Show the component only when the user is logged in
-        // Otherwise, redirect the user to / page
+        // Affiche le composant seulement si l'utilisateur est un admin
+        // Sinon redirige vers la page /
 
         <Route {...rest} render={props => (
             isAdmin() ?

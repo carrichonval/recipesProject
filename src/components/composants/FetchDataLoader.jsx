@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Affiche un laoder de chargement
 export default function LoaderFetching ( {text} ){
 
     return (

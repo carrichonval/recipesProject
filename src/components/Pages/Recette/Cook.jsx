@@ -155,6 +155,7 @@ export default function Cook (props){
         });
     }
 
+    //Récupère la note
     const getNote = (notes) => {
         if(notes && notes.length > 0 ){
             let total = 0
@@ -167,9 +168,8 @@ export default function Cook (props){
         }  
     }
 
-    const isOdd = (num) => { return num % 2;}
-
-    console.log(user)
+    //check si pair/impair
+    const isOdd = (num) => { return num % 2}
 
     if(recettes.length == 0){
         return(
