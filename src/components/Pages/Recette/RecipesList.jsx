@@ -81,6 +81,19 @@ export default function RecipesList (props){
         fetchRecipes()
     }, []);
 
+    const getNote = (notes) => {
+        console.log(notes)
+        
+        if(notes && notes.length > 0 ){
+            let total = 0
+            lodash.forEach(notes,(n)=>{
+                total += n.note
+            })
+            return Math.round(total / notes.length)
+        }else{
+            return null
+        }  
+    }
 
     const fetchRecipes = () =>{
         fetch(process.env.REACT_APP_API_URL+'/recettes', {
@@ -98,10 +111,10 @@ export default function RecipesList (props){
         .then((json) => {
             console.log(json)
             lodash.forEach(json,(recipe)=>{
-                let type = lodash.find(typeRecipes,(type)=>{
-                    return type.label == recipe.type
-                })
-                //recipe.type = type
+                
+                let note = getNote(recipe.recette_notes)
+                console.log(note)
+                recipe.note = note
                 recipe.value = recipe.id
                 recipe.label = recipe.type
             })

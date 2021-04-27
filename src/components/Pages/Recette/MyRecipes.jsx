@@ -122,7 +122,6 @@ export default function MyRecipes (props){
             return response.json();
         })
         .then((json) => {
-            
             lodash.forEach(json,(recipe)=>{
                 recipe.value = recipe.id
                 recipe.label = recipe.type
